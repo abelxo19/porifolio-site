@@ -40,7 +40,7 @@ export default function Hero() {
           <h1
             className={`text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl transition-all duration-500 delay-200 ${isVisible ? "opacity-100" : "opacity-0 translate-y-4"}`}
           >
-            Hi, I'm{" "}
+            Hi, I&apos;m{" "}
             <span className="text-primary relative">
               {displayText}
               {!isTypingComplete && (
