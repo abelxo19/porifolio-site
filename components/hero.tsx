@@ -6,9 +6,26 @@ import { ArrowRight } from "lucide-react"
 
 export default function Hero() {
   const [isVisible, setIsVisible] = useState(false)
+  const [displayText, setDisplayText] = useState("")
+  const fullName = "Abel Atkelet"
+  const [isTypingComplete, setIsTypingComplete] = useState(false)
 
   useEffect(() => {
     setIsVisible(true)
+
+    // Text generation effect
+    let currentIndex = 0
+    const typingInterval = setInterval(() => {
+      if (currentIndex <= fullName.length) {
+        setDisplayText(fullName.slice(0, currentIndex))
+        currentIndex++
+      } else {
+        clearInterval(typingInterval)
+        setIsTypingComplete(true)
+      }
+    }, 300) // Adjust speed as needed
+
+    return () => clearInterval(typingInterval)
   }, [])
 
   return (
@@ -23,7 +40,13 @@ export default function Hero() {
           <h1
             className={`text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl transition-all duration-500 delay-200 ${isVisible ? "opacity-100" : "opacity-0 translate-y-4"}`}
           >
-            Hi, I&apos;m <span className="text-primary">Abel Atkelet</span>
+            Hi, I'm{" "}
+            <span className="text-primary relative">
+              {displayText}
+              {!isTypingComplete && (
+                <span className="absolute -right-1 top-0 h-full w-[2px] bg-primary animate-pulse" />
+              )}
+            </span>
           </h1>
           <p
             className={`mx-auto max-w-[700px] text-muted-foreground md:text-xl transition-all duration-500 delay-400 ${isVisible ? "opacity-100" : "opacity-0 translate-y-4"}`}
