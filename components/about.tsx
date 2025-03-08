@@ -32,7 +32,7 @@ export default function About() {
           <div
             className={`relative h-[400px] overflow-hidden rounded-xl transition-all duration-700 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"}`}
           >
-            <Image src="/placeholder.svg?height=400&width=400" alt="Profile" fill className="object-cover" />
+            <Image src="/profile.jpg" alt="Profile" width={400} height={400} className="hidden md:block "/>
           </div>
           <div
             className={`space-y-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`}
