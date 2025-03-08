@@ -7,7 +7,7 @@ const skills = [
   { name: "React", level: 90 },
   { name: "Next.js", level: 85 },
   { name: "TypeScript", level: 80 },
-  { name: "Node.js", level: 75 },
+  { name: "Framer-Motion", level: 75 },
   { name: "Tailwind CSS", level: 95 },
   { name: "UI/UX Design", level: 70 },
 ]
@@ -29,6 +29,13 @@ const technologies = [
   "GitHub",
   "Figma",
   "Responsive Design",
+  "SEO",
+  "Supabase",
+  "Vercel",
+  "Python",
+  "Django",
+  "REST APIs",
+  "FastAPI",
 ]
 
 export default function Skills() {
