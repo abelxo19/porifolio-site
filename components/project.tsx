@@ -11,27 +11,27 @@ const projects = [
   {
     title: "E-Commerce Platform",
     description:
-      "A full-featured e-commerce platform with payment integration, user authentication, and admin dashboard.",
-    image: "/placeholder.svg?height=300&width=500",
+      "EcoShop is a Next.js-powered e-commerce platform with wishlist, search, and secure Stripe payments, delivering a fast, responsive, and smooth shopping experience.",
+    image: "/eco.png",
     tags: ["React", "Node.js", "MongoDB", "Stripe"],
     demoLink: "#",
-    githubLink: "#",
+    githubLink: "https://github.com/abelxo19/my-eco-shop.git",
   },
   {
-    title: "Task Management App",
-    description: "A collaborative task management application with real-time updates and team workspaces.",
-    image: "/placeholder.svg?height=300&width=500",
-    tags: ["Next.js", "TypeScript", "Prisma", "Tailwind CSS"],
-    demoLink: "#",
-    githubLink: "#",
+    title: "Horror Fan Site",
+    description: "A collection of my best horror-inspired stories,my best pics on top horror movies and series. Dark, eerie, and thrilling—step into my world of creativity and fear!",
+    image: "/haunt.png",
+    tags: ["Next.js", "TypeScript","Tailwind CSS", "Prisma","Supabase" ],
+    demoLink: "https://horror-fan-site.vercel.app/",
+    githubLink: "https://github.com/abelxo19/horror-fan-site.git",
   },
   {
-    title: "Portfolio Website",
-    description: "A modern portfolio website showcasing projects and skills with a clean, minimalist design.",
-    image: "/placeholder.svg?height=300&width=500",
+    title: "Landing Page",
+    description: "A modern landing page website showcasing projects and skills with a clean, minimalist and responsive design.",
+    image: "/landing.png",
     tags: ["React", "Tailwind CSS", "Framer Motion"],
-    demoLink: "#",
-    githubLink: "#",
+    demoLink: "https://modern-landing-page-theta.vercel.app/",
+    githubLink: "https://github.com/abelxo19/modern-landing-page.git",
   },
 ]
 
@@ -77,8 +77,9 @@ export default function Projects() {
                   <Image
                     src={project.image || "/placeholder.svg"}
                     alt={project.title}
-                    fill
-                    className="object-cover transition-transform duration-500 hover:scale-105"
+                    width={400}
+                    height={300}
+                    className=" transition-transform duration-500 hover:scale-105"
                   />
                 </div>
                 <CardHeader>
