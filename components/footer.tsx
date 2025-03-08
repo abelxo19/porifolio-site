@@ -1,4 +1,4 @@
-import { Github, Linkedin, Twitter, Instagram } from "lucide-react"
+import { Github, Linkedin} from "lucide-react"
 import Link from "next/link"
 
 export default function Footer() {
@@ -9,42 +9,28 @@ export default function Footer() {
           <div className="flex flex-col items-center gap-2 md:items-start">
             <Link href="/" className="flex items-center gap-2">
               <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-bold">P</span>
+                <span className="text-primary-foreground font-bold">AA</span>
               </div>
-              <span className="font-bold text-xl">Portfolio</span>
+              <span className="font-bold text-xl">Abel Atkelet</span>
             </Link>
             <p className="text-sm text-muted-foreground">
-              &copy; {new Date().getFullYear()} John Doe. All rights reserved.
+              &copy; {new Date().getFullYear()} Made with ❤️ by Abel Atkelet
             </p>
           </div>
           <div className="flex gap-4">
             <Link
-              href="#"
+              href="https://github.com/abelxo19"
               className="rounded-full p-2 text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"
             >
               <Github className="h-5 w-5" />
               <span className="sr-only">GitHub</span>
             </Link>
             <Link
-              href="#"
+              href="https://www.linkedin.com/in/abel-atkelet-b36993282"
               className="rounded-full p-2 text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"
             >
               <Linkedin className="h-5 w-5" />
               <span className="sr-only">LinkedIn</span>
-            </Link>
-            <Link
-              href="#"
-              className="rounded-full p-2 text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"
-            >
-              <Twitter className="h-5 w-5" />
-              <span className="sr-only">Twitter</span>
-            </Link>
-            <Link
-              href="#"
-              className="rounded-full p-2 text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"
-            >
-              <Instagram className="h-5 w-5" />
-              <span className="sr-only">Instagram</span>
             </Link>
           </div>
         </div>
