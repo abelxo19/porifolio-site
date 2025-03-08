@@ -40,23 +40,25 @@ export default function About() {
             <div className="inline-block rounded-lg bg-primary/10 px-3 py-1 text-sm text-primary">About Me</div>
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">Passionate Developer & Designer</h2>
             <p className="text-muted-foreground md:text-lg">
-              I&apos;m a full-stack developer with over 5 years of experience building web applications. I specialize in
-              creating responsive, user-friendly interfaces with modern technologies.
+              I&apos;m a full-stack developer with over 3 years of experience building web applications. I specialize in
+              creating responsive, user-friendly interfaces with modern technologies like Nextjs.
             </p>
             <p className="text-muted-foreground md:text-lg">
-              My journey in web development started when I was in college, and since then, I&apos;ve worked with various
-              clients and companies to bring their ideas to life. I&apos;m passionate about clean code, accessibility, and
+              My journey in web development started when I was in university, and since then, I&apos;ve worked in various
+              projects and client to bring their ideas to life. I&apos;m passionate about clean code, responsivness, accessibility, and
               creating exceptional user experiences.
             </p>
             <p className="text-muted-foreground md:text-lg">
-              When I&apos;m not coding, you can find me hiking, reading, or experimenting with new technologies.
+              When I&apos;m not coding, you can find me playing football, reading, or experimenting with new technologies.
             </p>
             <div className="flex gap-4 pt-4">
-              <Button className="group">
+                <a href="/resume.pdf" download="Abel_Resume.pdf">
+                <Button className="group">
                 <Download className="mr-2 h-4 w-4 transition-transform group-hover:-translate-y-1" />
                 Download Resume
-              </Button>
-            </div>
+                </Button>
+                </a>
+            </div>         
           </div>
         </div>
       </div>
