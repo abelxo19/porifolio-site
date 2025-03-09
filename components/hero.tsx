@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
+import Link from "next/link"
 
 export default function Hero() {
   const [isVisible, setIsVisible] = useState(false)
@@ -55,11 +56,13 @@ export default function Hero() {
           </p>
           <div
             className={`flex flex-col sm:flex-row gap-4 justify-center mt-8 transition-all duration-500 delay-600 ${isVisible ? "opacity-100" : "opacity-0 translate-y-4"}`}
-          >
+          > 
+          <Link href='https://github.com/abelxo19'>
             <Button size="lg" className="group">
               View My Work
               <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Button>
+          </Link>  
             <Button size="lg" variant="outline">
               Contact Me
             </Button>
