@@ -56,21 +56,21 @@ export default function About() {
             <div className="inline-block rounded-lg bg-primary/10 px-3 py-1 text-sm text-primary">
               About Me
             </div>
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">
+            <h2 className="text-2xl font-bold tracking-tighter sm:text-4xl">
               Passionate Developer & Designer
             </h2>
-            <p className="text-muted-foreground md:text-lg">
+            <p className="text-muted-foreground text-sm md:text-lg">
               I&apos;m a full-stack developer with over 3 years of experience
               building web applications. I specialize in creating responsive,
               user-friendly interfaces with modern technologies like Next.js.
             </p>
-            <p className="text-muted-foreground md:text-lg">
+            <p className="text-muted-foreground text-sm md:text-lg">
               My journey in web development started when I was in university,
               and since then, I&apos;ve worked on various projects to bring ideas
               to life. I&apos;m passionate about clean code, responsiveness,
               accessibility, and creating exceptional user experiences.
             </p>
-            <p className="text-muted-foreground md:text-lg">
+            <p className="text-muted-foreground text-sm md:text-lg">
               When I&apos;m not coding, you can find me playing football, reading, or
               experimenting with new technologies.
             </p>
