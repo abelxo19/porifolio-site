@@ -32,7 +32,7 @@ export default function About() {
         <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
           {/* 3D Effect Image */}
           <motion.div
-            className="relative h-[400px] overflow-hidden rounded-3xl transition-all duration-70"
+            className="relative md:h-[400px] overflow-hidden rounded-3xl transition-all duration-70"
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: isVisible ? 1 : 0, x: isVisible ? 0 : -10 }}
             whileHover={{ rotateY: 10, rotateX: 10, scale: 1.05 }}
