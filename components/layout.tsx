@@ -145,10 +145,9 @@ interface MobileNavLinkProps {
   children: React.ReactNode
 }
 
-function MobileNavLink({ href, onClick, icon, children }: MobileNavLinkProps) {
+function MobileNavLink({ href, onClick , children }: MobileNavLinkProps) {
   return (
-    <Link href={href} onClick={onClick} className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-secondary">
-      {icon}
+    <Link href={href} onClick={onClick} className="flex items-cente justify-center gap-3 px-3 py-2 rounded-md hover:bg-secondary">
       <span>{children}</span>
     </Link>
   )
