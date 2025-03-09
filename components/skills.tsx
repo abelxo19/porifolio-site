@@ -36,6 +36,8 @@ const technologies = [
   "Django",
   "REST APIs",
   "FastAPI",
+  "Project Management",
+  "Agile-Scrum",
 ]
 
 export default function Skills() {
