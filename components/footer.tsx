@@ -14,7 +14,7 @@ export default function Footer() {
               <span className="font-bold text-xl">Abel Atkelet</span>
             </Link>
             <p className="text-sm text-muted-foreground">
-              &copy; {new Date().getFullYear()} Made with ❤️ by Abel Atkelet
+              &copy; {new Date().getFullYear()} Made with ❤️ by Abel Atkelet!
             </p>
           </div>
           <div className="flex gap-4">
