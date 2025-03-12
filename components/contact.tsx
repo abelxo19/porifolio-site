@@ -55,9 +55,9 @@ export default function Contact() {
         e.currentTarget.reset();
       }
     } catch {
-      setFormState({ error: "Something went wrong. Please try again.", success: null });
+      setFormState({ error: null, success:null });
     }
-
+    
     setIsSubmitting(false);
   };
 
