@@ -22,7 +22,7 @@ export async function sendContactEmail(formData: FormData) {
     }
 
     // Send email using Resend
-    const { data, error } = await resend.emails.send({
+    const { error } = await resend.emails.send({
       from: "Contact Form <onboarding@resend.dev>", // You can customize this
       to: "abelaatkelet@gmail.com",
       subject: `Contact Form: ${subject}`,
