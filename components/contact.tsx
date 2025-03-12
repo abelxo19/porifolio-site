@@ -1,14 +1,27 @@
 "use client"
 
+import type React from "react"
+import { startTransition } from "react"
+
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Mail, Phone, MapPin, Send } from "lucide-react"
+import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle } from "lucide-react"
+import { sendContactEmail } from "@/app/action/contact"
+import { useActionState } from "react"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+
+const initialState = {
+  error: null,
+  success: null,
+}
 
 export default function Contact() {
   const [isVisible, setIsVisible] = useState(false)
+  const [formState] = useActionState(sendContactEmail, initialState)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -26,6 +39,24 @@ export default function Contact() {
 
     return () => observer.disconnect()
   }, [])
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+  
+    const formData = new FormData(e.currentTarget)
+  
+    startTransition(() => {
+      sendContactEmail(formData) // Ensure state updates correctly within a transition
+    })
+  
+    setIsSubmitting(false)
+  
+    // Reset form if successful
+    if (formState.success) {
+      e.currentTarget.reset()
+    }
+  }
 
   return (
     <section id="contact" className="py-20">
@@ -86,8 +117,8 @@ export default function Contact() {
               </CardHeader>
               <CardContent>
                 <p className="text-primary-foreground/90">
-                  Whether you need a website, web application, or consultation, I&apos;m here to help bring your ideas to
-                  life with modern technologies and best practices.
+                  Whether you need a website, web application, or consultation, I&apos;m here to help bring your ideas
+                  to life with modern technologies and best practices.
                 </p>
               </CardContent>
             </Card>
@@ -99,27 +130,73 @@ export default function Contact() {
             <Card>
               <CardHeader>
                 <CardTitle>Send a Message</CardTitle>
-                <CardDescription>Fill out the form below and I&apos;ll get back to you as soon as possible.</CardDescription>
+                <CardDescription>
+                  Fill out the form below and I&apos;ll get back to you as soon as possible.
+                </CardDescription>
               </CardHeader>
               <CardContent>
-                <form className="space-y-4">
+                {formState.success && (
+                  <Alert className="mb-4 bg-green-50 text-green-800 border-green-200">
+                    <CheckCircle className="h-4 w-4 text-green-600" />
+                    <AlertTitle>Success!</AlertTitle>
+                    <AlertDescription>{formState.success}</AlertDescription>
+                  </Alert>
+                )}
+
+                {formState.error && (
+                  <Alert className="mb-4 bg-red-50 text-red-800 border-red-200">
+                    <AlertCircle className="h-4 w-4 text-red-600" />
+                    <AlertTitle>Error</AlertTitle>
+                    <AlertDescription>{formState.error}</AlertDescription>
+                  </Alert>
+                )}
+
+                <form className="space-y-4" onSubmit={handleSubmit}>
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div className="space-y-2">
-                      <Input placeholder="Name" />
+                      <Input name="name" placeholder="Name" required />
                     </div>
                     <div className="space-y-2">
-                      <Input placeholder="Email" type="email" />
+                      <Input name="email" placeholder="Email" type="email" required />
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <Input placeholder="Subject" />
+                    <Input name="subject" placeholder="Subject" required />
                   </div>
                   <div className="space-y-2">
-                    <Textarea placeholder="Your message" className="min-h-[120px]" />
+                    <Textarea name="message" placeholder="Your message" className="min-h-[120px]" required />
                   </div>
-                  <Button type="submit" className="w-full">
-                    <Send className="mr-2 h-4 w-4" />
-                    Send Message
+                  <Button type="submit" className="w-full" disabled={isSubmitting}>
+                    {isSubmitting ? (
+                      <span className="flex items-center">
+                        <svg
+                          className="animate-spin -ml-1 mr-3 h-4 w-4 text-white"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          ></circle>
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                          ></path>
+                        </svg>
+                        Sending...
+                      </span>
+                    ) : (
+                      <>
+                        <Send className="mr-2 h-4 w-4" />
+                        Send Message
+                      </>
+                    )}
                   </Button>
                 </form>
               </CardContent>
