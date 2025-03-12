@@ -2,7 +2,7 @@
 
 import type React from "react"
 import { useState, useEffect } from "react"
-import { Home, Briefcase, User, Code, Mail, Menu, X} from "lucide-react"
+import { Home, Briefcase, User, Code, Mail, Menu, X } from "lucide-react"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
 
@@ -50,22 +50,18 @@ export default function Layout({ children }: LayoutProps) {
       <header className="sticky top-0 z-50 bg-background border-b border-neutral-200">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-center h-16">
-
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center justify-center space-x-1">
-                <NavLink href="#home" isActive={activeSection === "home"}>
-                  Home
-                </NavLink>
-                <NavLink href="#about" isActive={activeSection === "about"}>
+              <NavLink href="#home" isActive={activeSection === "home"}>
+                Home
+              </NavLink>
+              <NavLink href="#about" isActive={activeSection === "about"}>
                 About
               </NavLink>
-              <NavLink href="#skills" isActive={activeSection === "skills"} >
+              <NavLink href="#skills" isActive={activeSection === "skills"}>
                 Skills
               </NavLink>
-              <NavLink
-                href="#projects"
-                isActive={activeSection === "projects"}
-              >
+              <NavLink href="#projects" isActive={activeSection === "projects"}>
                 Projects
               </NavLink>
               <NavLink href="#contact" isActive={activeSection === "contact"}>
@@ -80,34 +76,34 @@ export default function Layout({ children }: LayoutProps) {
           </div>
         </div>
 
-        {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="md:hidden bg-background border-t border-neutral-200">
-            <nav className="flex flex-col py-4 px-4 space-y-2">
-              <MobileNavLink href="#home" onClick={() => setIsMenuOpen(false)} icon={<Home className="h-5 w-5" />}>
-                Home
-              </MobileNavLink>
-              <MobileNavLink
-                href="#projects"
-                onClick={() => setIsMenuOpen(false)}
-                icon={<Briefcase className="h-5 w-5" />}
-              >
-                Projects
-              </MobileNavLink>
-              <MobileNavLink href="#about" onClick={() => setIsMenuOpen(false)} icon={<User className="h-5 w-5" />}>
-                About
-              </MobileNavLink>
-              <MobileNavLink href="#skills" onClick={() => setIsMenuOpen(false)} icon={<Code className="h-5 w-5" />}>
-                Skills
-              </MobileNavLink>
-              <MobileNavLink href="#contact" onClick={() => setIsMenuOpen(false)} icon={<Mail className="h-5 w-5" />}>
-                Contact
-              </MobileNavLink>
-
-             
-            </nav>
-          </div>
-        )}
+        {/* Mobile Navigation - Now with fade animation */}
+        <div
+          className={`md:hidden absolute left-0 right-0 top-16 bg-background border-t border-neutral-200 shadow-lg z-40 transition-all duration-300 ease-in-out ${
+            isMenuOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4 pointer-events-none"
+          }`}
+        >
+          <nav className="flex flex-col py-4 px-4 space-y-2">
+            <MobileNavLink href="#home" onClick={() => setIsMenuOpen(false)} icon={<Home className="h-5 w-5" />}>
+              Home
+            </MobileNavLink>
+            <MobileNavLink
+              href="#projects"
+              onClick={() => setIsMenuOpen(false)}
+              icon={<Briefcase className="h-5 w-5" />}
+            >
+              Projects
+            </MobileNavLink>
+            <MobileNavLink href="#about" onClick={() => setIsMenuOpen(false)} icon={<User className="h-5 w-5" />}>
+              About
+            </MobileNavLink>
+            <MobileNavLink href="#skills" onClick={() => setIsMenuOpen(false)} icon={<Code className="h-5 w-5" />}>
+              Skills
+            </MobileNavLink>
+            <MobileNavLink href="#contact" onClick={() => setIsMenuOpen(false)} icon={<Mail className="h-5 w-5" />}>
+              Contact
+            </MobileNavLink>
+          </nav>
+        </div>
       </header>
 
       {/* Main Content */}
@@ -147,7 +143,11 @@ interface MobileNavLinkProps {
 
 function MobileNavLink({ href, onClick , children }: MobileNavLinkProps) {
   return (
-    <Link href={href} onClick={onClick} className="flex items-cente justify-center gap-3 px-3 py-2 rounded-md hover:bg-secondary">
+    <Link
+      href={href}
+      onClick={onClick}
+      className="flex items-center justify-center gap-3 px-3 py-2 rounded-md hover:bg-secondary"
+    >
       <span>{children}</span>
     </Link>
   )
