@@ -13,15 +13,16 @@ const projects = [
     description:
       "EcoShop is a Next.js-powered e-commerce platform with wishlist, search, and secure Stripe payments, delivering a fast, responsive, and smooth shopping experience.",
     image: "/eco.png",
-    tags: ["Nextjs.js", "MongoDB", "Stripe",'kinde'],
+    tags: ["Nextjs.js", "MongoDB", "Stripe", "kinde"],
     demoLink: "#",
     githubLink: "https://github.com/abelxo19/my-eco-shop.git",
   },
   {
     title: "Horror Fan Site",
-    description: "A collection of my best horror-inspired stories,my best pics on top horror movies and series. Dark, eerie, and thrilling—step into my world of creativity and fear!",
+    description:
+      "A collection of my best horror-inspired stories, my best pics on top horror movies and series. Dark, eerie, and thrilling—step into my world of creativity and fear!",
     image: "/haunt.png",
-    tags: ["Next.js", "TypeScript","Tailwind CSS", "Prisma","Supabase",'kinde' ],
+    tags: ["Next.js", "TypeScript", "Tailwind CSS", "Prisma", "Supabase", "kinde"],
     demoLink: "https://horror-fan-site.vercel.app/",
     githubLink: "https://github.com/abelxo19/horror-fan-site.git",
   },
@@ -32,6 +33,15 @@ const projects = [
     tags: ["Nextjs", "Tailwind CSS", "Framer Motion"],
     demoLink: "https://modern-landing-page-theta.vercel.app/",
     githubLink: "https://github.com/abelxo19/modern-landing-page.git",
+  },
+  {
+    title: "AI-Powered Cloud-Based Fitness-Tracker Web App",
+    description:
+      "A fitness tracker web app powered by AI, leveraging cloud-based technologies to provide personalized fitness insights and progress tracking.",
+    image: "/fitness.png", // Replace with the actual image path
+    tags: ["React", "Firebase", "GeminiAI", "GoogleCloud"],
+    demoLink: "https://fitness-track--fitness-tracker-458718.us-central1.hosted.app/",
+    githubLink: "https://github.com/abelxo19/fitness-track.git",
   },
 ]
 

@@ -141,7 +141,7 @@ interface MobileNavLinkProps {
   children: React.ReactNode
 }
 
-function MobileNavLink({ href, onClick , children }: MobileNavLinkProps) {
+function MobileNavLink({ href, onClick, children }: MobileNavLinkProps) {
   return (
     <Link
       href={href}
