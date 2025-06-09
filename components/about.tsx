@@ -77,7 +77,15 @@ export default function About() {
 
             {/* Resume Download Button */}
             <div className="flex gap-4 pt-4">
-              <a href="/resume.pdf" download="Abel_Resume.pdf">
+              <a 
+                href="/resume.pdf" 
+                download="Abel_Resume.pdf"
+                className="inline-block"
+                aria-label="Download Resume"
+                onClick={() => {
+                  console.log('Resume download initiated');
+                }}
+              >
                 <Button className="group">
                   <Download className="mr-2 h-4 w-4 transition-transform group-hover:-translate-y-1" />
                   Download Resume
