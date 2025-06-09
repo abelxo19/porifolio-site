@@ -1,66 +1,71 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Progress } from "@/components/ui/progress"
-
-const skills = [
-  { name: "React", level: 90 },
-  { name: "Next.js", level: 85 },
-  { name: "TypeScript", level: 80 },
-  { name: "Framer-Motion", level: 75 },
-  { name: "Tailwind CSS", level: 95 },
-  { name: "UI/UX Design", level: 70 },
-]
+import Image from "next/image"
 
 const technologies = [
-  "HTML5",
-  "CSS3",
-  "JavaScript",
-  "React",
-  "Next.js",
-  "TypeScript",
-  "Node.js",
-  "Express",
-  "MongoDB",
-  "PostgreSQL",
-  "Tailwind CSS",
-  "Framer Motion",
-  "Git",
-  "GitHub",
-  "Figma",
-  "Responsive Design",
-  "SEO",
-  "Supabase",
-  "Vercel",
-  "Python",
-  "Django",
-  "REST APIs",
-  "FastAPI",
-  "Project Management",
-  "Agile-Scrum",
+  {
+    name: "React",
+    logo: "/tech/react.svg",
+    category: "Frontend"
+  },
+  {
+    name: "Next.js",
+    logo: "/tech/next.svg",
+    category: "Frontend"
+  },
+  {
+    name: "TypeScript",
+    logo: "/tech/typescript.png",
+    category: "Frontend"
+  },
+  {
+    name: "Node.js",
+    logo: "/tech/node.svg",
+    category: "Backend"
+  },
+
+
+  {
+    name: "PostgreSQL",
+    logo: "/tech/postgresql.svg",
+    category: "Database"
+  },
+  {
+    name: "Tailwind CSS",
+    logo: "/tech/tailwind.svg",
+    category: "Frontend"
+  },
+  {
+    name: "Django",
+    logo: "/tech/django.svg",
+    category: "Backend"
+  },
+  {
+    name: "Python",
+    logo: "/tech/python.png",
+    category: "Backend"
+  },
+  {
+    name: "Git",
+    logo: "/tech/git.svg",
+    category: "Tools"
+  },
+  {
+    name: "GitHub",
+    logo: "/tech/github.svg",
+    category: "Version Control"
+  }
 ]
 
 export default function Skills() {
   const [isVisible, setIsVisible] = useState(false)
-  const [progressValues, setProgressValues] = useState(skills.map(() => 0))
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true)
-
-          // Animate progress bars
-          skills.forEach((skill, index) => {
-            setTimeout(() => {
-              setProgressValues((prev) => {
-                const newValues = [...prev]
-                newValues[index] = skill.level
-                return newValues
-              })
-            }, index * 100)
-          })
-
           observer.disconnect()
         }
       },
@@ -74,49 +79,36 @@ export default function Skills() {
   }, [])
 
   return (
-    <section id="skills" className="py-20 bg-secondary/20 px-4 md:px-6">
-      <div className="container px-4 md:px-6">
-        <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
-          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">My Skills</h2>
-          <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
-            Here are some of the technologies and tools I work with.
-          </p>
+    <section id="skills" className="py-20 bg-secondary/20">
+      <div className="container max-w-5xl mx-auto px-4">
+        <div className="flex flex-col items-center justify-center space-y-4 text-center mb-16">
+          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Skills & Technologies</h2>
         </div>
 
-        <div className="grid gap-12 md:grid-cols-2">
-          <div
-            className={`space-y-6 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
-          >
-            <h3 className="text-2xl font-bold">Core Competencies</h3>
-            <div className="space-y-4">
-              {skills.map((skill, index) => (
-                <div key={index} className="space-y-2">
-                  <div className="flex justify-between">
-                    <span className="font-medium">{skill.name}</span>
-                    <span className="text-muted-foreground">{progressValues[index]}%</span>
-                  </div>
-                  <Progress value={progressValues[index]} className="h-2" />
+        <div className={`grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-8 transition-all duration-700 ${
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+        }`}>
+          {technologies.map((tech, index) => (
+            <div
+              key={tech.name}
+              className="group relative flex flex-col items-center"
+              style={{ transitionDelay: `${index * 50}ms` }}
+            >
+              <div className="relative w-16 h-16 mb-2 transition-transform duration-300 group-hover:scale-110">
+                <Image
+                  src={tech.logo}
+                  alt={tech.name}
+                  fill
+                  className="object-contain filter dark:invert"
+                />
+              </div>
+              <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                <div className="bg-background/95 backdrop-blur-sm px-3 py-1 rounded-full shadow-lg border border-primary/10">
+                  <span className="text-sm font-medium whitespace-nowrap">{tech.name}</span>
                 </div>
-              ))}
+              </div>
             </div>
-          </div>
-
-          <div
-            className={`transition-all duration-700 delay-300 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
-          >
-            <h3 className="text-2xl font-bold mb-6">Technologies & Tools</h3>
-            <div className="flex flex-wrap gap-2">
-              {technologies.map((tech, index) => (
-                <div
-                  key={index}
-                  className={`bg-background border border-primary/20 rounded-full px-4 py-2 text-sm transition-all duration-300 ${isVisible ? "opacity-100 scale-100" : "opacity-0 scale-90"}`}
-                  style={{ transitionDelay: `${index * 50}ms` }}
-                >
-                  {tech}
-                </div>
-              ))}
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>

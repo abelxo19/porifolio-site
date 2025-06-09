@@ -59,11 +59,11 @@ export default function Hero() {
           > 
           <Link href='https://github.com/abelxo19'>
             <Button size="lg" className="group">
-              View My Work
+              View My Projects
               <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Button>
           </Link>  
-          <Link href='#contact'>
+          <Link href='https://t.me/abelxo19'>
             <Button size="lg" variant="outline">
               Contact Me
             </Button>

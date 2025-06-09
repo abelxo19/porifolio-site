@@ -43,8 +43,15 @@ const projects = [
     demoLink: "https://fitness-track--fitness-tracker-458718.us-central1.hosted.app/",
     githubLink: "https://github.com/abelxo19/fitness-track.git",
   },
-]
-
+  {
+    title: "ConnectX - E-Commerce Platform",
+    description:
+      "ConnectX is a multi-tenant e-commerce platform that enables merchants to manage their online stores, products, and orders, while providing customers with a seamless shopping experience. It features merchant onboarding, admin management, analytics, and secure payment integration.",
+    image: "/connect.png",
+    tags: ["Next.js", "Django", "PostgreSQL", "Docker"],
+    demoLink: "https://connect-x-peach.vercel.app/",
+    githubLink: "https://github.com/maajidAwol/ConnectX.git",
+  },]
 export default function Projects() {
   const [isVisible, setIsVisible] = useState(false)
 
@@ -76,7 +83,7 @@ export default function Projects() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((project, index) => (
+          {projects.slice(0, 3).map((project, index) => (
             <div
               key={index}
               className={`transition-all duration-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
@@ -122,6 +129,56 @@ export default function Projects() {
               </Card>
             </div>
           ))}
+        </div>
+        <div className="flex justify-center mt-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl">
+            {projects.slice(3).map((project, index) => (
+              <div
+                key={index + 3}
+                className={`transition-all duration-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+                style={{ transitionDelay: `${(index + 3) * 100}ms` }}
+              >
+                <Card className="overflow-hidden h-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1 backdrop-blur-sm bg-background/80 border-primary/10">
+                  <div className="relative h-48 w-full overflow-hidden">
+                    <Image
+                      src={project.image || "/placeholder.svg"}
+                      alt={project.title}
+                      width={400}
+                      height={300}
+                      className="transition-transform duration-500 hover:scale-105"
+                    />
+                  </div>
+                  <CardHeader>
+                    <CardTitle>{project.title}</CardTitle>
+                    <CardDescription>{project.description}</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex flex-wrap gap-2">
+                      {project.tags.map((tag, i) => (
+                        <Badge key={i} variant="secondary">
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
+                  </CardContent>
+                  <CardFooter className="flex justify-between">
+                    <Button variant="outline" size="sm" asChild>
+                      <a href={project.githubLink} target="_blank" rel="noopener noreferrer">
+                        <Github className="mr-2 h-4 w-4" />
+                        Code
+                      </a>
+                    </Button>
+                    <Button size="sm" asChild>
+                      <a href={project.demoLink} target="_blank" rel="noopener noreferrer">
+                        <ExternalLink className="mr-2 h-4 w-4" />
+                        Demo
+                      </a>
+                    </Button>
+                  </CardFooter>
+                </Card>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
