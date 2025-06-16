@@ -53,7 +53,7 @@
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.129 0.042 264.695);
   /* Updated primary color to #3F704D */
-  --primary: #3F704D;
+  --primary: #6366F1;
   --primary-foreground: #F5F5DC; /* Using a light beige color for contrast */
   --secondary: oklch(0.968 0.007 247.896);
   --secondary-foreground: oklch(0.208 0.042 265.755);

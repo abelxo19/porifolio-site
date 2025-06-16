@@ -20,12 +20,30 @@ const technologies = [
     category: "Frontend"
   },
   {
+    name: "JavaScript",
+    logo: "/tech/javascript.svg",
+    category: "Frontend"
+  },
+  {
+    name: "HTML",
+    logo: "/tech/html.svg",
+    category: "Frontend"
+  },
+  {
+    name: "CSS",
+    logo: "/tech/css.svg",
+    category: "Frontend"
+  },
+  {
     name: "Node.js",
-    logo: "/tech/node.svg",
+    logo: "/tech/nodejs.svg",
     category: "Backend"
   },
-
-
+  {
+    name: "MySQL",
+    logo: "/tech/mysql.svg",
+    category: "Database"
+  },
   {
     name: "PostgreSQL",
     logo: "/tech/postgresql.svg",
@@ -38,13 +56,18 @@ const technologies = [
   },
   {
     name: "Django",
-    logo: "/tech/django.svg",
+    logo: "/tech/django2.svg",
     category: "Backend"
   },
   {
     name: "Python",
     logo: "/tech/python.png",
     category: "Backend"
+  },
+  {
+    name: "C++",
+    logo: "/tech/cpp.svg",
+    category: "Programming"
   },
   {
     name: "Git",
