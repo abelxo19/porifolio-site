@@ -1,10 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { Download } from "lucide-react";
 
 export default function About() {
   const [isVisible, setIsVisible] = useState(false);
