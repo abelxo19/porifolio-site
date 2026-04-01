@@ -30,7 +30,7 @@ export default function About() {
     <section id="about" className="py-11 md:py-20">
       <div className="container px-4 md:px-6">
         <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
-          {/* 3D Effect Image */}
+          {/* 3D Effect Image 
           <motion.div
             className="relative md:h-[400px] overflow-hidden rounded-3xl transition-all duration-70"
             initial={{ opacity: 0, x: -10 }}
@@ -45,7 +45,7 @@ export default function About() {
               height={400}
               className="hidden md:block md:ml-16"
             />
-          </motion.div>
+          </motion.div> */}
 
           {/* About Content */}
           <motion.div
@@ -75,7 +75,7 @@ export default function About() {
               experimenting with new technologies.
             </p>
 
-            {/* Resume Download Button */}
+            {/* Resume Download Button 
             <div className="flex gap-4 pt-4">
               <a 
                 href="/resume.pdf" 
@@ -91,7 +91,7 @@ export default function About() {
                   Download Resume
                 </Button>
               </a>
-            </div>
+            </div> */}
           </motion.div>
         </div>
       </div>
