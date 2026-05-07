@@ -89,7 +89,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <p className="text-sm text-muted-foreground">Email</p>
-                    <p className="font-medium">abelatkelet826@gmail.com</p>
+                    <p className="font-medium">abelaatkelet@gmail.com</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
@@ -107,7 +107,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <p className="text-sm text-muted-foreground">Location</p>
-                    <p className="font-medium">Vancouver, Canada</p>
+                    <p className="font-medium">Los Angles, USA</p>
                   </div>
                 </div>
               </CardContent>
