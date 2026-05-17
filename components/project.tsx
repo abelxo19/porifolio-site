@@ -4,23 +4,10 @@ import { useEffect, useState } from "react"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Download, ExternalLink, FileText, Github, Globe } from "lucide-react"
+import { ExternalLink, Github, Globe } from "lucide-react"
 import Image from "next/image"
 
 const projects = [
-  {
-    title: "WordPress & Elementor Resume",
-    description:
-      "A focused resume card highlighting extensive WordPress knowledge, Elementor page building, responsive design, plugin setup, performance tuning, and client-ready website delivery.",
-    image: "/file.svg",
-    tags: ["WordPress", "Elementor", "CMS", "Responsive Design"],
-    primaryLink: "/resume.pdf",
-    primaryLabel: "View Resume",
-    secondaryLink: "/resume.pdf",
-    secondaryLabel: "Download",
-    secondaryDownload: "Abel_Atkelet_Resume.pdf",
-    imageMode: "icon",
-  },
   {
     title: "Islamic Seminary Website",
     description:
@@ -103,8 +90,6 @@ const projects = [
 ]
 
 const getActionIcon = (label: string) => {
-  if (label.toLowerCase().includes("resume")) return FileText
-  if (label.toLowerCase().includes("download")) return Download
   if (label.toLowerCase().includes("visit")) return Globe
   return ExternalLink
 }
@@ -131,7 +116,6 @@ export default function Projects() {
 
   const renderProjectCard = (project: (typeof projects)[number], index: number) => {
     const PrimaryIcon = getActionIcon(project.primaryLabel)
-    const SecondaryIcon = project.secondaryLabel ? getActionIcon(project.secondaryLabel) : null
 
     return (
       <div
@@ -170,18 +154,6 @@ export default function Projects() {
                 <a href={project.githubLink} target="_blank" rel="noopener noreferrer">
                   <Github className="mr-2 h-4 w-4" />
                   Code
-                </a>
-              </Button>
-            ) : project.secondaryLink && SecondaryIcon ? (
-              <Button variant="outline" size="sm" asChild>
-                <a
-                  href={project.secondaryLink}
-                  download={project.secondaryDownload}
-                  target={project.secondaryDownload ? undefined : "_blank"}
-                  rel={project.secondaryDownload ? undefined : "noopener noreferrer"}
-                >
-                  <SecondaryIcon className="mr-2 h-4 w-4" />
-                  {project.secondaryLabel}
                 </a>
               </Button>
             ) : (
