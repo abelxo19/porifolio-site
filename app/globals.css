@@ -122,11 +122,15 @@
 
 @layer base {
   * {
-    @apply border-neutral-200 outline-ring/50;
+    @apply border-neutral-200 outline-ring/50 dark:border-neutral-800;
   }
   body {
     @apply bg-background text-foreground;
     font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .dark {
+    color-scheme: dark;
   }
 }
 

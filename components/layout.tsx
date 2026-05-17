@@ -5,6 +5,7 @@ import { useState, useEffect } from "react"
 import { Home, Briefcase, User, Code, Mail, Menu, X } from "lucide-react"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
+import ThemeToggle from "@/components/theme-toggle"
 
 interface LayoutProps {
   children: React.ReactNode
@@ -47,7 +48,7 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Navbar */}
-      <header className="sticky top-0 z-50 bg-background border-b border-neutral-200">
+      <header className="sticky top-0 z-50 bg-background border-b border-neutral-200 dark:border-neutral-800">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-center h-16">
             {/* Desktop Navigation */}
@@ -69,8 +70,16 @@ export default function Layout({ children }: LayoutProps) {
               </NavLink>
             </nav>
 
+            <div className="absolute right-14 md:right-4">
+              <ThemeToggle />
+            </div>
+
             {/* Mobile Menu Button */}
-            <button className="md:hidden p-5 absolute right-0" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            <button
+              className="md:hidden p-5 absolute right-0 text-foreground"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+            >
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
           </div>
@@ -78,7 +87,7 @@ export default function Layout({ children }: LayoutProps) {
 
         {/* Mobile Navigation - Now with fade animation */}
         <div
-          className={`md:hidden absolute left-0 right-0 top-16 bg-background border-t border-neutral-200 shadow-lg z-40 transition-all duration-300 ease-in-out ${
+          className={`md:hidden absolute left-0 right-0 top-16 bg-background border-t border-neutral-200 shadow-lg z-40 transition-all duration-300 ease-in-out dark:border-neutral-800 ${
             isMenuOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4 pointer-events-none"
           }`}
         >
