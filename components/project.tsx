@@ -12,7 +12,7 @@ const projects = [
     title: "Islamic Seminary Website",
     description:
       "WordPress website experience supporting a content-rich seminary presence with clear navigation, structured pages, and a polished public-facing experience.",
-    image: "/tech/wordpress.svg",
+    image: "/Tisa.png  ",
     tags: ["WordPress", "Elementor", "CMS", "Website Management"],
     primaryLink: "https://islamicseminary.us",
     primaryLabel: "Visit Site",
@@ -22,7 +22,7 @@ const projects = [
     title: "Dr. Tamara Henry Website",
     description:
       "WordPress and Elementor site work for a professional brand, balancing approachable content presentation, mobile responsiveness, and maintainable page layouts.",
-    image: "/tech/elementor.svg",
+    image: "/dr.png",
     tags: ["WordPress", "Elementor", "Professional Site", "Responsive UI"],
     primaryLink: "https://drtamarahenry.com/",
     primaryLabel: "Visit Site",
@@ -32,7 +32,7 @@ const projects = [
     title: "Simsbury Troop 1175 Website",
     description:
       "Community-focused WordPress website experience with organized content, easy updates, and practical page structures for visitors and members.",
-    image: "/tech/wordpress.svg",
+    image: "/Troop1175.png",
     tags: ["WordPress", "Elementor", "Community Site", "Content Updates"],
     primaryLink: "https://simsburytroop1175.org",
     primaryLabel: "Visit Site",
