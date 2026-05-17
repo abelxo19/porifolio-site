@@ -35,6 +35,18 @@ const technologies = [
     category: "Frontend"
   },
   {
+    name: "WordPress",
+    logo: "/tech/wordpress.svg",
+    category: "CMS",
+    preserveColor: true
+  },
+  {
+    name: "Elementor",
+    logo: "/tech/elementor.svg",
+    category: "Page Builder",
+    preserveColor: true
+  },
+  {
     name: "Node.js",
     logo: "/tech/nodejs.svg",
     category: "Backend"
@@ -122,7 +134,7 @@ export default function Skills() {
                   src={tech.logo}
                   alt={tech.name}
                   fill
-                  className="object-contain filter dark:invert"
+                  className={`object-contain ${tech.preserveColor ? "" : "filter dark:invert"}`}
                 />
               </div>
               <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300">
