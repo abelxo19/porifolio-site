@@ -13,7 +13,7 @@ const projects = [
     description:
       "WordPress website experience supporting a content-rich seminary presence with clear navigation, structured pages, and a polished public-facing experience.",
     image: "/Tisa.png",
-    tags: ["WordPress", "Elementor", "CMS", "Website Management"],
+    tags: ["WordPress", "Elementor", "CMS", "Website Management", "Payment Integration"],
     primaryLink: "https://islamicseminary.us",
     primaryLabel: "Visit Site",
   },
