@@ -16,7 +16,6 @@ const projects = [
     tags: ["WordPress", "Elementor", "CMS", "Website Management"],
     primaryLink: "https://islamicseminary.us",
     primaryLabel: "Visit Site",
-    imageMode: "icon",
   },
   {
     title: "Dr. Tamara Henry Website",
@@ -26,7 +25,6 @@ const projects = [
     tags: ["WordPress", "Elementor", "Professional Site", "Responsive UI"],
     primaryLink: "https://drtamarahenry.com/",
     primaryLabel: "Visit Site",
-    imageMode: "icon",
   },
   {
     title: "Simsbury Troop 1175 Website",
@@ -36,7 +34,6 @@ const projects = [
     tags: ["WordPress", "Elementor", "Community Site", "Content Updates"],
     primaryLink: "https://simsburytroop1175.org",
     primaryLabel: "Visit Site",
-    imageMode: "icon",
   },
   {
     title: "E-Commerce Platform",
@@ -124,15 +121,13 @@ export default function Projects() {
         style={{ transitionDelay: `${index * 100}ms` }}
       >
         <Card className="overflow-hidden h-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1 backdrop-blur-sm bg-background/80 border-primary/10">
-          <div className="relative h-48 w-full overflow-hidden bg-secondary/40">
+          <div className="relative h-56 w-full overflow-hidden bg-secondary/40">
             <Image
               src={project.image || "/placeholder.svg"}
               alt={project.title}
               fill
               sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-              className={`transition-transform duration-500 hover:scale-105 ${
-                project.imageMode === "icon" ? "object-contain p-12" : "object-cover"
-              }`}
+              className="object-cover object-top transition-transform duration-500 hover:scale-105"
             />
           </div>
           <CardHeader>
