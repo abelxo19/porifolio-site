@@ -98,7 +98,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <p className="text-sm text-muted-foreground">Phone</p>
-                    <p className="font-medium">+1-(240) 432-2106</p>
+                    <p className="font-medium">+251993861744</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
@@ -107,7 +107,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <p className="text-sm text-muted-foreground">Location</p>
-                    <p className="font-medium">Los Angles, USA</p>
+                    <p className="font-medium">Addis Ababa, Ethiopia</p>
                   </div>
                 </div>
               </CardContent>
