@@ -30,17 +30,26 @@ export default function About() {
         <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
           <motion.div
             className="relative min-h-[320px] overflow-hidden rounded-xl bg-secondary/40 shadow-sm md:min-h-[430px]"
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: isVisible ? 1 : 0, x: isVisible ? 0 : -10 }}
-            whileHover={{ rotateY: 10, rotateX: 10, scale: 1.05 }}
-            transition={{ duration: 0.5 }}
+            initial={{ opacity: 0, x: -24, scale: 0.98 }}
+            animate={
+              isVisible
+                ? { opacity: 1, x: 0, scale: 1, y: [0, -6, 0] }
+                : { opacity: 0, x: -24, scale: 0.98, y: 0 }
+            }
+            whileHover={{ rotateY: 4, rotateX: 2, scale: 1.02 }}
+            transition={{
+              opacity: { duration: 0.6 },
+              x: { duration: 0.6 },
+              scale: { duration: 0.6 },
+              y: { duration: 6, repeat: Infinity, ease: "easeInOut" },
+            }}
           >
             <Image
               src="/hero.png"
               alt="Abel Atkelet"
               fill
               sizes="(min-width: 1024px) 50vw, 100vw"
-              className="object-cover object-center"
+              className="object-cover object-top"
               priority
             />
           </motion.div>
@@ -48,8 +57,9 @@ export default function About() {
           {/* About Content */}
           <motion.div
             className="space-y-4 transition-all duration-700"
-            initial={{ opacity: 0, x: 10 }}
-            animate={{ opacity: isVisible ? 1 : 0, x: isVisible ? 0 : 10 }}
+            initial={{ opacity: 0, x: 24 }}
+            animate={{ opacity: isVisible ? 1 : 0, x: isVisible ? 0 : 24 }}
+            transition={{ duration: 0.6, delay: 0.12 }}
           >
             <div className="inline-block rounded-lg bg-primary/10 px-3 py-1 text-sm text-primary">
               About Me
