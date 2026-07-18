@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 export default function About() {
   const [isVisible, setIsVisible] = useState(false);
@@ -27,22 +28,22 @@ export default function About() {
     <section id="about" className="py-11 md:py-20">
       <div className="container px-4 md:px-6">
         <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
-          {/* 3D Effect Image 
           <motion.div
-            className="relative md:h-[400px] overflow-hidden rounded-3xl transition-all duration-70"
+            className="relative min-h-[320px] overflow-hidden rounded-xl bg-secondary/40 shadow-sm md:min-h-[430px]"
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: isVisible ? 1 : 0, x: isVisible ? 0 : -10 }}
             whileHover={{ rotateY: 10, rotateX: 10, scale: 1.05 }}
             transition={{ duration: 0.5 }}
           >
             <Image
-              src="/profile.jpg"
-              alt="Profile"
-              width={400}
-              height={400}
-              className="hidden md:block md:ml-16"
+              src="/hero.png"
+              alt="Abel Atkelet"
+              fill
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              className="object-cover object-center"
+              priority
             />
-          </motion.div> */}
+          </motion.div>
 
           {/* About Content */}
           <motion.div
