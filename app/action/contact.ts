@@ -1,6 +1,7 @@
 "use server"
 
 import { Resend } from "resend"
+import { validateContactFields } from "@/lib/contact-validation"
 
 // Initialize Resend with your API key
 const resend = new Resend(process.env.RESEND_API_KEY)
@@ -12,13 +13,9 @@ export async function sendContactEmail(formData: FormData) {
     const subject = formData.get("subject") as string
     const message = formData.get("message") as string
 
-    // Validate form data
-    if (!name || !email || !subject || !message) {
-      return { error: "All fields are required" }
-    }
-
-    if (!email.includes("@")) {
-      return { error: "Please enter a valid email address" }
+    const validationError = validateContactFields({ name, email, subject, message })
+    if (validationError) {
+      return { error: validationError }
     }
 
     // Send email using Resend

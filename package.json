@@ -2,11 +2,15 @@
   "name": "porifolio-site",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "20.x"
+  },
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "vitest run"
   },
   "dependencies": {
     "@radix-ui/react-progress": "^1.1.2",
@@ -35,6 +39,7 @@
     "eslint-config-next": "^16.2.2",
     "react-email": "3.0.7",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^4.1.10"
   }
 }
