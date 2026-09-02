@@ -22,7 +22,7 @@ const initialState = {
 const contactDetails = [
   { icon: Mail, label: "Email", value: "abelaatkelet@gmail.com" },
   { icon: Phone, label: "Phone", value: "+251993861744" },
-  { icon: MapPin, label: "Location", value: "Addis Ababa, Ethiopia" },
+  { icon: MapPin, label: "Location", value: "Nairobi, Kenya" },
 ];
 
 const formFields = [
