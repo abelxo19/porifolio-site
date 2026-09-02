@@ -1,58 +1,71 @@
 "use client"
 
-import { useEffect, useState } from "react"
 import Image from "next/image"
+import { motion } from "framer-motion"
+import SectionHeading from "@/components/decor/section-heading"
+import { StaggerGroup, StaggerItem } from "@/components/motion/stagger"
 import { technologies } from "@/lib/skills-data"
 
+const categoryOrder = [
+  "Frontend",
+  "Backend",
+  "Database",
+  "CMS",
+  "Page Builder",
+  "Programming",
+  "Tools",
+  "Version Control",
+]
+
+const groupedTechnologies = categoryOrder
+  .map((category) => ({
+    category,
+    items: technologies.filter((tech) => tech.category === category),
+  }))
+  .filter((group) => group.items.length > 0)
+
 export default function Skills() {
-  const [isVisible, setIsVisible] = useState(false)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-          observer.disconnect()
-        }
-      },
-      { threshold: 0.1 },
-    )
-
-    const element = document.getElementById("skills")
-    if (element) observer.observe(element)
-
-    return () => observer.disconnect()
-  }, [])
-
   return (
-    <section id="skills" className="py-20 bg-secondary/20">
-      <div className="container max-w-5xl mx-auto px-4">
-        <div className="flex flex-col items-center justify-center space-y-4 text-center mb-16">
-          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Skills & Technologies</h2>
-        </div>
+    <section id="skills" className="relative py-20 md:py-28">
+      <div className="container mx-auto max-w-5xl px-4">
+        <SectionHeading
+          kicker="Capabilities"
+          title="Skills & Technologies"
+          description="The languages, frameworks, and tools I reach for when building reliable, polished products."
+          className="mb-14"
+        />
 
-        <div className={`grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-8 transition-all duration-700 ${
-          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-        }`}>
-          {technologies.map((tech, index) => (
-            <div
-              key={tech.name}
-              className="group relative flex flex-col items-center"
-              style={{ transitionDelay: `${index * 50}ms` }}
-            >
-              <div className="relative w-16 h-16 mb-2 transition-transform duration-300 group-hover:scale-110">
-                <Image
-                  src={tech.logo}
-                  alt={tech.name}
-                  fill
-                  className={`object-contain ${tech.preserveColor ? "" : "filter dark:invert"}`}
-                />
+        <div className="space-y-10">
+          {groupedTechnologies.map((group) => (
+            <div key={group.category}>
+              <div className="mb-4 flex items-center gap-3">
+                <span className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
+                  {group.category}
+                </span>
+                <span className="h-px flex-1 bg-border" aria-hidden />
               </div>
-              <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                <div className="bg-background/95 backdrop-blur-sm px-3 py-1 rounded-full shadow-lg border border-primary/10">
-                  <span className="text-sm font-medium whitespace-nowrap">{tech.name}</span>
-                </div>
-              </div>
+
+              <StaggerGroup className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+                {group.items.map((tech) => (
+                  <StaggerItem key={tech.name}>
+                    <motion.div
+                      whileHover={{ y: -4, scale: 1.02 }}
+                      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                      className="glow-border group flex items-center gap-3 rounded-xl border border-border/60 bg-secondary/30 px-4 py-3 transition-colors hover:border-primary/30"
+                    >
+                      <div className="relative h-8 w-8 shrink-0">
+                        <Image
+                          src={tech.logo}
+                          alt={tech.name}
+                          fill
+                          className={`object-contain ${tech.preserveColor ? "" : "dark:invert"}`}
+                        />
+                      </div>
+                      <span className="text-sm font-medium">{tech.name}</span>
+                    </motion.div>
+                  </StaggerItem>
+                ))}
+              </StaggerGroup>
             </div>
           ))}
         </div>
@@ -60,4 +73,3 @@ export default function Skills() {
     </section>
   )
 }
-

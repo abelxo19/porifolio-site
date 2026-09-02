@@ -1,41 +1,32 @@
 "use client"
 
 import { Moon, Sun } from "lucide-react"
+import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
+import { motion } from "framer-motion"
 
 export default function ThemeToggle() {
-  const [isDark, setIsDark] = useState(false)
+  const { resolvedTheme, setTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
 
-  useEffect(() => {
-    const savedTheme = window.localStorage.getItem("theme")
-    const shouldUseDark = savedTheme === "dark"
+  useEffect(() => setMounted(true), [])
 
-    document.documentElement.classList.toggle("dark", shouldUseDark)
-    setIsDark(shouldUseDark)
-  }, [])
-
-  const toggleTheme = () => {
-    const nextTheme = !isDark
-
-    document.documentElement.classList.toggle("dark", nextTheme)
-    window.localStorage.setItem("theme", nextTheme ? "dark" : "light")
-    setIsDark(nextTheme)
-  }
+  const isDark = mounted ? resolvedTheme === "dark" : true
 
   return (
     <button
       type="button"
-      onClick={toggleTheme}
+      onClick={() => setTheme(isDark ? "light" : "dark")}
       aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
-      className="group relative inline-flex h-9 w-16 items-center rounded-full border border-neutral-200 bg-white p-1 shadow-sm transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 dark:border-neutral-700 dark:bg-neutral-900 dark:hover:bg-neutral-800"
+      className="group relative inline-flex h-8 w-14 items-center rounded-full border border-border bg-secondary/60 p-1 transition-colors hover:border-primary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
     >
-      <span
-        className={`absolute inset-y-1 grid aspect-square place-items-center rounded-full bg-primary text-primary-foreground shadow-md transition-transform duration-300 ${
-          isDark ? "translate-x-7" : "translate-x-0"
-        }`}
+      <motion.span
+        className="absolute inset-y-1 grid aspect-square place-items-center rounded-full bg-primary text-primary-foreground shadow-md"
+        animate={{ x: isDark ? 24 : 2 }}
+        transition={{ type: "spring", stiffness: 400, damping: 28 }}
       >
-        {isDark ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
-      </span>
+        {isDark ? <Moon className="h-3.5 w-3.5" /> : <Sun className="h-3.5 w-3.5" />}
+      </motion.span>
       <span className="sr-only">Toggle theme</span>
     </button>
   )

@@ -1,7 +1,8 @@
 "use client";
 
 import type React from "react";
-import {  useEffect, useState } from "react";
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,33 +11,28 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle } from "lucide-react";
 import { sendContactEmail } from "@/app/action/contact";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import FadeIn from "@/components/motion/fade-in";
+import SectionHeading from "@/components/decor/section-heading";
 
 const initialState = {
   error: null as string | null,
   success: null as string | null,
 };
 
+const contactDetails = [
+  { icon: Mail, label: "Email", value: "abelaatkelet@gmail.com" },
+  { icon: Phone, label: "Phone", value: "+251993861744" },
+  { icon: MapPin, label: "Location", value: "Addis Ababa, Ethiopia" },
+];
+
+const formFields = [
+  { name: "name", label: "Name", type: "text", placeholder: "Your name" },
+  { name: "email", label: "Email", type: "email", placeholder: "you@example.com" },
+];
+
 export default function Contact() {
-  const [isVisible, setIsVisible] = useState(false);
   const [formState, setFormState] = useState(initialState);
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    const element = document.getElementById("contact");
-    if (element) observer.observe(element);
-
-    return () => observer.disconnect();
-  }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -50,70 +46,50 @@ export default function Contact() {
         error: response.error || null,
         success: response.success || null,
       });
-      
+
       if (response.success) {
         e.currentTarget.reset();
       }
     } catch {
-      setFormState({ error: null, success:null });
+      setFormState({ error: null, success: null });
     }
-    
+
     setIsSubmitting(false);
   };
 
   return (
-    <section id="contact" className="py-20">
+    <section id="contact" className="relative py-20 md:py-28">
       <div className="container px-4 md:px-6">
-        <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
-          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Get In Touch</h2>
-          <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
-            Have a project in mind or want to collaborate? Feel free to reach out!
-          </p>
-        </div>
+        <SectionHeading
+          kicker="Get In Touch"
+          title="Let's Build Something"
+          description="Have a project in mind or want to collaborate? Feel free to reach out!"
+          className="mb-14"
+        />
 
         <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
-          <div
-            className={`space-y-6 transition-all duration-700 ${
-              isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"
-            }`}
-          >
-            <Card>
+          <FadeIn direction="left" className="space-y-6">
+            <Card className="glass-panel border-border/60">
               <CardHeader>
                 <CardTitle>Contact Information</CardTitle>
                 <CardDescription>Feel free to reach out through any of these channels.</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
-                    <Mail className="h-5 w-5 text-primary" />
+                {contactDetails.map((detail) => (
+                  <div key={detail.label} className="flex items-center gap-3">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
+                      <detail.icon className="h-5 w-5 text-primary" />
+                    </div>
+                    <div>
+                      <p className="text-sm text-muted-foreground">{detail.label}</p>
+                      <p className="font-medium">{detail.value}</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Email</p>
-                    <p className="font-medium">abelaatkelet@gmail.com</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
-                    <Phone className="h-5 w-5 text-primary" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Phone</p>
-                    <p className="font-medium">+251993861744</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
-                    <MapPin className="h-5 w-5 text-primary" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Location</p>
-                    <p className="font-medium">Addis Ababa, Ethiopia</p>
-                  </div>
-                </div>
+                ))}
               </CardContent>
             </Card>
 
-            <Card className="bg-primary text-primary-foreground">
+            <Card className="glow-border bg-primary text-primary-foreground">
               <CardHeader>
                 <CardTitle>Let&apos;s work together</CardTitle>
                 <CardDescription className="text-primary-foreground/80">
@@ -127,14 +103,10 @@ export default function Contact() {
                 </p>
               </CardContent>
             </Card>
-          </div>
+          </FadeIn>
 
-          <div
-            className={`transition-all duration-700 ${
-              isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
-            }`}
-          >
-            <Card>
+          <FadeIn direction="right">
+            <Card className="glass-panel border-border/60">
               <CardHeader>
                 <CardTitle>Send a Message</CardTitle>
                 <CardDescription>
@@ -142,46 +114,80 @@ export default function Contact() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                {formState.success && (
-                  <Alert className="mb-4 bg-green-50 text-green-800 border-green-200">
-                    <CheckCircle className="h-4 w-4 text-green-600" />
-                    <AlertTitle>Success!</AlertTitle>
-                    <AlertDescription>{formState.success}</AlertDescription>
-                  </Alert>
-                )}
+                <AnimatePresence mode="wait">
+                  {formState.success && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                    >
+                      <Alert className="mb-4 bg-green-50 text-green-800 border-green-200 dark:bg-green-950/40 dark:text-green-300 dark:border-green-900">
+                        <CheckCircle className="h-4 w-4 text-green-600 dark:text-green-400" />
+                        <AlertTitle>Success!</AlertTitle>
+                        <AlertDescription>{formState.success}</AlertDescription>
+                      </Alert>
+                    </motion.div>
+                  )}
 
-                {formState.error && (
-                  <Alert className="mb-4 bg-red-50 text-red-800 border-red-200">
-                    <AlertCircle className="h-4 w-4 text-red-600" />
-                    <AlertTitle>Error</AlertTitle>
-                    <AlertDescription>{formState.error}</AlertDescription>
-                  </Alert>
-                )}
+                  {formState.error && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                    >
+                      <Alert className="mb-4 bg-red-50 text-red-800 border-red-200 dark:bg-red-950/40 dark:text-red-300 dark:border-red-900">
+                        <AlertCircle className="h-4 w-4 text-red-600 dark:text-red-400" />
+                        <AlertTitle>Error</AlertTitle>
+                        <AlertDescription>{formState.error}</AlertDescription>
+                      </Alert>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
 
                 <form className="space-y-4" onSubmit={handleSubmit}>
                   <div className="grid gap-4 sm:grid-cols-2">
-                    <div className="space-y-2">
-                      <Input name="name" placeholder="Name" required />
-                    </div>
-                    <div className="space-y-2">
-                      <Input name="email" placeholder="Email" type="email" required />
-                    </div>
+                    {formFields.map((field) => (
+                      <div className="space-y-2" key={field.name}>
+                        <label htmlFor={field.name} className="text-sm font-medium">
+                          {field.label}
+                        </label>
+                        <Input
+                          id={field.name}
+                          name={field.name}
+                          type={field.type}
+                          placeholder={field.placeholder}
+                          required
+                        />
+                      </div>
+                    ))}
                   </div>
                   <div className="space-y-2">
-                    <Input name="subject" placeholder="Subject" required />
+                    <label htmlFor="subject" className="text-sm font-medium">
+                      Subject
+                    </label>
+                    <Input id="subject" name="subject" placeholder="What's this about?" required />
                   </div>
                   <div className="space-y-2">
-                    <Textarea name="message" placeholder="Your message" className="min-h-[120px]" required />
+                    <label htmlFor="message" className="text-sm font-medium">
+                      Message
+                    </label>
+                    <Textarea
+                      id="message"
+                      name="message"
+                      placeholder="Tell me about your project"
+                      className="min-h-[120px]"
+                      required
+                    />
                   </div>
-                  <Button type="submit" className="w-full" disabled={isSubmitting}>
+                  <Button type="submit" variant="glow" className="w-full" size="lg" disabled={isSubmitting}>
                     {isSubmitting ? (
-                      <span className="flex items-center">
-                        <Send className="mr-2 h-4 w-4" />
+                      <span className="flex items-center gap-2">
+                        <Send className="h-4 w-4" />
                         Sending...
                       </span>
                     ) : (
                       <>
-                        <Send className="mr-2 h-4 w-4" />
+                        <Send className="h-4 w-4" />
                         Send Message
                       </>
                     )}
@@ -189,7 +195,7 @@ export default function Contact() {
                 </form>
               </CardContent>
             </Card>
-          </div>
+          </FadeIn>
         </div>
       </div>
     </section>

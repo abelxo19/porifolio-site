@@ -1,9 +1,10 @@
 "use client"
 
 import type React from "react"
-import { useState, useEffect } from "react"
+import { useEffect, useState } from "react"
 import { Home, Briefcase, User, Code, Mail, Menu, X } from "lucide-react"
 import Link from "next/link"
+import { AnimatePresence, motion } from "framer-motion"
 import { cn } from "@/lib/utils"
 import ThemeToggle from "@/components/theme-toggle"
 
@@ -11,112 +12,139 @@ interface LayoutProps {
   children: React.ReactNode
 }
 
+const NAV_SECTIONS = [
+  { id: "home", label: "Home", icon: Home },
+  { id: "about", label: "About", icon: User },
+  { id: "skills", label: "Skills", icon: Code },
+  { id: "projects", label: "Projects", icon: Briefcase },
+  { id: "contact", label: "Contact", icon: Mail },
+]
+
 export default function Layout({ children }: LayoutProps) {
-  const [mounted, setMounted] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState("home")
+  const [isScrolled, setIsScrolled] = useState(false)
 
-  // Prevent hydration mismatch
   useEffect(() => {
-    setMounted(true)
-
-    // Add scroll event listener to update active section
     const handleScroll = () => {
-      const sections = ["home", "projects", "about", "skills", "contact"]
-      const scrollPosition = window.scrollY + 100 // Offset for navbar height
+      setIsScrolled(window.scrollY > 8)
 
-      for (const section of sections) {
-        const element = document.getElementById(section)
+      const scrollPosition = window.scrollY + 120
+
+      for (const section of NAV_SECTIONS) {
+        const element = document.getElementById(section.id)
         if (element) {
           const { offsetTop, offsetHeight } = element
           if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setActiveSection(section)
+            setActiveSection(section.id)
             break
           }
         }
       }
     }
 
-    window.addEventListener("scroll", handleScroll)
+    handleScroll()
+    window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  if (!mounted) {
-    return null
-  }
+  useEffect(() => {
+    document.body.style.overflow = isMenuOpen ? "hidden" : ""
+    return () => {
+      document.body.style.overflow = ""
+    }
+  }, [isMenuOpen])
 
   return (
-    <div className="flex flex-col min-h-screen">
-      {/* Navbar */}
-      <header className="sticky top-0 z-50 bg-background border-b border-neutral-200 dark:border-neutral-800">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-center h-16">
-            {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center justify-center space-x-1">
-              <NavLink href="#home" isActive={activeSection === "home"}>
-                Home
-              </NavLink>
-              <NavLink href="#about" isActive={activeSection === "about"}>
-                About
-              </NavLink>
-              <NavLink href="#skills" isActive={activeSection === "skills"}>
-                Skills
-              </NavLink>
-              <NavLink href="#projects" isActive={activeSection === "projects"}>
-                Projects
-              </NavLink>
-              <NavLink href="#contact" isActive={activeSection === "contact"}>
-                Contact
-              </NavLink>
-            </nav>
+    <div className="flex min-h-screen flex-col">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
+      >
+        Skip to content
+      </a>
 
-            <div className="absolute right-14 md:right-4">
-              <ThemeToggle />
-            </div>
+      <header className="fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-4">
+        <div
+          className={cn(
+            "flex w-full max-w-5xl items-center justify-between gap-2 rounded-full border px-3 py-2 transition-all duration-300 md:px-4",
+            isScrolled
+              ? "glass-panel border-border/60 shadow-[0_8px_30px_-12px_var(--glow-primary)]"
+              : "border-transparent bg-transparent",
+          )}
+        >
+          <Link
+            href="#home"
+            className="flex items-center gap-2 rounded-full px-2 py-1 text-sm font-semibold tracking-tight"
+          >
+            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground font-display text-sm">
+              AA
+            </span>
+            <span className="hidden font-display sm:inline">Abel Atkelet</span>
+          </Link>
 
-            {/* Mobile Menu Button */}
+          <nav className="hidden items-center gap-1 md:flex" aria-label="Primary">
+            {NAV_SECTIONS.map((section) => (
+              <NavLink
+                key={section.id}
+                href={`#${section.id}`}
+                isActive={activeSection === section.id}
+              >
+                {section.label}
+              </NavLink>
+            ))}
+          </nav>
+
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
             <button
-              className="md:hidden p-5 absolute right-0 text-foreground"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              type="button"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full text-foreground md:hidden"
+              onClick={() => setIsMenuOpen((open) => !open)}
               aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isMenuOpen}
             >
-              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
           </div>
         </div>
-
-        {/* Mobile Navigation - Now with fade animation */}
-        <div
-          className={`md:hidden absolute left-0 right-0 top-16 bg-background border-t border-neutral-200 shadow-lg z-40 transition-all duration-300 ease-in-out dark:border-neutral-800 ${
-            isMenuOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4 pointer-events-none"
-          }`}
-        >
-          <nav className="flex flex-col py-4 px-4 space-y-2">
-            <MobileNavLink href="#home" onClick={() => setIsMenuOpen(false)} icon={<Home className="h-5 w-5" />}>
-              Home
-            </MobileNavLink>
-            <MobileNavLink
-              href="#projects"
-              onClick={() => setIsMenuOpen(false)}
-              icon={<Briefcase className="h-5 w-5" />}
-            >
-              Projects
-            </MobileNavLink>
-            <MobileNavLink href="#about" onClick={() => setIsMenuOpen(false)} icon={<User className="h-5 w-5" />}>
-              About
-            </MobileNavLink>
-            <MobileNavLink href="#skills" onClick={() => setIsMenuOpen(false)} icon={<Code className="h-5 w-5" />}>
-              Skills
-            </MobileNavLink>
-            <MobileNavLink href="#contact" onClick={() => setIsMenuOpen(false)} icon={<Mail className="h-5 w-5" />}>
-              Contact
-            </MobileNavLink>
-          </nav>
-        </div>
       </header>
 
-      {/* Main Content */}
-      <main className="flex-1">{children}</main>
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-40 glass-panel md:hidden"
+          >
+            <motion.nav
+              className="flex h-full flex-col items-center justify-center gap-3 px-6"
+              aria-label="Mobile"
+              initial="hidden"
+              animate="visible"
+              variants={{ visible: { transition: { staggerChildren: 0.06, delayChildren: 0.1 } } }}
+            >
+              {NAV_SECTIONS.map((section) => (
+                <MobileNavLink
+                  key={section.id}
+                  href={`#${section.id}`}
+                  isActive={activeSection === section.id}
+                  onClick={() => setIsMenuOpen(false)}
+                  icon={<section.icon className="h-5 w-5" />}
+                >
+                  {section.label}
+                </MobileNavLink>
+              ))}
+            </motion.nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <main id="main-content" className="flex-1 pt-24">
+        {children}
+      </main>
     </div>
   )
 }
@@ -124,41 +152,56 @@ export default function Layout({ children }: LayoutProps) {
 interface NavLinkProps {
   href: string
   isActive?: boolean
-  icon?: React.ReactNode
   children: React.ReactNode
 }
 
-function NavLink({ href, isActive, icon, children }: NavLinkProps) {
+function NavLink({ href, isActive, children }: NavLinkProps) {
   return (
     <Link
       href={href}
+      aria-current={isActive ? "page" : undefined}
       className={cn(
-        "flex items-center gap-1.5 px-5 py-2 rounded-sm text-sm font-medium transition-colors",
-        isActive ? "bg-primary text-primary-foreground" : "hover:bg-secondary hover:text-foreground",
+        "relative rounded-full px-4 py-2 text-sm font-medium transition-colors",
+        isActive ? "text-primary-foreground" : "text-foreground/70 hover:text-foreground",
       )}
     >
-      {icon}
-      {children}
+      {isActive && (
+        <motion.span
+          layoutId="nav-active-pill"
+          className="absolute inset-0 rounded-full bg-primary"
+          transition={{ type: "spring", stiffness: 350, damping: 30 }}
+        />
+      )}
+      <span className="relative z-10">{children}</span>
     </Link>
   )
 }
 
 interface MobileNavLinkProps {
   href: string
+  isActive?: boolean
   onClick: () => void
   icon: React.ReactNode
   children: React.ReactNode
 }
 
-function MobileNavLink({ href, onClick, children }: MobileNavLinkProps) {
+function MobileNavLink({ href, isActive, onClick, children, icon }: MobileNavLinkProps) {
   return (
-    <Link
-      href={href}
-      onClick={onClick}
-      className="flex items-center justify-center gap-3 px-3 py-2 rounded-md hover:bg-secondary"
+    <motion.div
+      variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}
+      className="w-full max-w-xs"
     >
-      <span>{children}</span>
-    </Link>
+      <Link
+        href={href}
+        onClick={onClick}
+        className={cn(
+          "flex w-full items-center justify-center gap-3 rounded-xl border border-transparent px-4 py-3 text-lg font-medium transition-colors",
+          isActive ? "border-primary/30 bg-primary/10 text-primary" : "hover:bg-secondary/60",
+        )}
+      >
+        {icon}
+        {children}
+      </Link>
+    </motion.div>
   )
 }
-
