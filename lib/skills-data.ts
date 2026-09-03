@@ -84,6 +84,18 @@ export const technologies: Technology[] = [
     category: "Programming",
   },
   {
+    name: "Docker",
+    logo: "/tech/docker.svg",
+    category: "Tools",
+    preserveColor: true,
+  },
+  {
+    name: "AWS",
+    logo: "/tech/aws.svg",
+    category: "Tools",
+    preserveColor: true,
+  },
+  {
     name: "Git",
     logo: "/tech/git.svg",
     category: "Tools",
