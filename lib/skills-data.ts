@@ -85,13 +85,13 @@ export const technologies: Technology[] = [
   },
   {
     name: "Docker",
-    logo: "/tech/docker.svg",
+    logo: "/tech/docker.png",
     category: "Tools",
     preserveColor: true,
   },
   {
     name: "AWS",
-    logo: "/tech/aws.svg",
+    logo: "/tech/aws.png",
     category: "Tools",
     preserveColor: true,
   },
