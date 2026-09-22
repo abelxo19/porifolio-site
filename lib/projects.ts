@@ -13,9 +13,9 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    title: "Islamic Seminary Website",
+    title: "Islamic Seminary",
     description:
-      "WordPress website experience supporting a content-rich seminary presence with clear navigation, structured pages, and a polished public-facing experience.",
+      "A content-rich seminary website with clear navigation, easy content management, and integrated payments.",
     image: "/Tisa.png",
     tags: ["WordPress", "Elementor", "CMS", "Website Management", "Payment Integration"],
     primaryLink: "https://islamicseminary.us",
@@ -25,9 +25,9 @@ export const projects: Project[] = [
     impact: "A polished, easy-to-maintain public presence for the seminary's programs and community.",
   },
   {
-    title: "Dr. Tamara Henry Website",
+    title: "Dr. Tamara Henry",
     description:
-      "WordPress and Elementor site work for a professional brand, balancing approachable content presentation, mobile responsiveness, and maintainable page layouts.",
+      "A personal brand website with responsive Elementor layouts, approachable content, and a polished professional presence.",
     image: "/dr.png",
     tags: ["WordPress", "Elementor", "Professional Site", "Responsive UI"],
     primaryLink: "https://drtamarahenry.com/",
@@ -37,9 +37,9 @@ export const projects: Project[] = [
     impact: "A professional, mobile-responsive site that represents the brand clearly across devices.",
   },
   {
-    title: "Simsbury Troop 1175 Website",
+    title: "Simsbury Troop 1175",
     description:
-      "Community-focused WordPress website experience with organized content, easy updates, and practical page structures for visitors and members.",
+      "A community website with organized information for members and visitors, built for easy updates by troop volunteers.",
     image: "/Troop1175.png",
     tags: ["WordPress", "Elementor", "Community Site", "Content Updates"],
     primaryLink: "https://simsburytroop1175.org",
@@ -49,11 +49,11 @@ export const projects: Project[] = [
     impact: "A community site that stays current, maintained directly by troop organizers.",
   },
   {
-    title: "E-Commerce Platform",
+    title: "EcoShop E-Commerce",
     description:
-      "EcoShop is a Next.js-powered e-commerce platform with wishlist, search, and secure Stripe payments, delivering a fast, responsive, and smooth shopping experience.",
+      "An online store with product search, wishlists, and secure Stripe checkout, built with Next.js and MongoDB.",
     image: "/eco.png",
-    tags: ["Nextjs.js", "MongoDB", "Stripe", "kinde"],
+    tags: ["Next.js", "MongoDB", "Stripe", "Kinde"],
     primaryLink: "#",
     primaryLabel: "Demo",
     githubLink: "https://github.com/abelxo19/my-eco-shop.git",
@@ -64,9 +64,9 @@ export const projects: Project[] = [
   {
     title: "Horror Fan Site",
     description:
-      "A collection of my best horror-inspired stories and top horror movie and series picks. Dark, eerie, and thrilling, step into my world of creativity and fear.",
+      "An immersive home for original horror stories and curated film picks, with a custom content system and a distinctive visual identity.",
     image: "/haunt.png",
-    tags: ["Next.js", "TypeScript", "Tailwind CSS", "Prisma", "Supabase", "kinde"],
+    tags: ["Next.js", "TypeScript", "Tailwind CSS", "Prisma", "Supabase", "Kinde"],
     primaryLink: "https://horror-fan-site.vercel.app/",
     primaryLabel: "Demo",
     githubLink: "https://github.com/abelxo19/horror-fan-site.git",
@@ -78,7 +78,7 @@ export const projects: Project[] = [
     title: "Landing Page",
     description: "A modern landing page website showcasing projects and skills with a clean, minimalist and responsive design.",
     image: "/landing.png",
-    tags: ["Nextjs", "Tailwind CSS", "Framer Motion"],
+    tags: ["Next.js", "Tailwind CSS", "Framer Motion"],
     primaryLink: "https://modern-landing-page-theta.vercel.app/",
     primaryLabel: "Demo",
     githubLink: "https://github.com/abelxo19/modern-landing-page.git",
@@ -87,11 +87,11 @@ export const projects: Project[] = [
     impact: "A reusable, modern landing page template with smooth motion and fast load times.",
   },
   {
-    title: "AI-Powered Cloud-Based Fitness-Tracker Web App",
+    title: "AI Fitness Tracker",
     description:
-      "A fitness tracker web app powered by AI, leveraging cloud-based technologies to provide personalized fitness insights and progress tracking.",
+      "A cloud-hosted fitness app that turns activity tracking into personalized insights with Gemini AI.",
     image: "/fitness.png",
-    tags: ["React", "Firebase", "GeminiAI", "GoogleCloud"],
+    tags: ["React", "Firebase", "Gemini AI", "Google Cloud"],
     primaryLink: "https://fitness-track--fitness-tracker-458718.us-central1.hosted.app/",
     primaryLabel: "Demo",
     githubLink: "https://github.com/abelxo19/fitness-track.git",
@@ -100,9 +100,9 @@ export const projects: Project[] = [
     impact: "A cloud-hosted app that turns tracked activity into personalized fitness insights.",
   },
   {
-    title: "ConnectX - E-Commerce Platform",
+    title: "ConnectX E-Commerce",
     description:
-      "ConnectX is a multi-tenant e-commerce platform for merchant onboarding, store management, analytics, orders, and secure payment integration.",
+      "A multi-tenant commerce platform for merchant onboarding, store management, analytics, and secure payments.",
     image: "/connect.png",
     tags: ["Next.js", "Django", "PostgreSQL", "Docker"],
     primaryLink: "https://connect-x-peach.vercel.app/",

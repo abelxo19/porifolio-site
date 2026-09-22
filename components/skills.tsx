@@ -1,72 +1,44 @@
-"use client"
-
 import Image from "next/image"
-import { motion } from "framer-motion"
 import SectionHeading from "@/components/decor/section-heading"
-import { StaggerGroup, StaggerItem } from "@/components/motion/stagger"
+import FadeIn from "@/components/motion/fade-in"
 import { technologies } from "@/lib/skills-data"
 
-const categoryOrder = [
-  "Frontend",
-  "Backend",
-  "Database",
-  "CMS",
-  "Page Builder",
-  "Programming",
-  "Tools",
-  "Version Control",
+const groups = [
+  { name: "Frontend", categories: ["Frontend"], description: "Responsive interfaces with care for every detail." },
+  { name: "Backend & data", categories: ["Backend", "Database", "Programming"], description: "The logic, APIs, and data behind the experience." },
+  { name: "WordPress & Elementor", categories: ["CMS", "Page Builder"], description: "Custom websites, payment integration, and content management." },
+  { name: "Tools & delivery", categories: ["Tools", "Version Control"], description: "Version control, deployment, and dependable delivery." },
 ]
-
-const groupedTechnologies = categoryOrder
-  .map((category) => ({
-    category,
-    items: technologies.filter((tech) => tech.category === category),
-  }))
-  .filter((group) => group.items.length > 0)
 
 export default function Skills() {
   return (
-    <section id="skills" className="relative py-20 md:py-28">
-      <div className="container mx-auto max-w-5xl px-4">
-        <SectionHeading
-          kicker="Capabilities"
-          title="Skills & Technologies"
-          description="The languages, frameworks, and tools I reach for when building reliable, polished products."
-          className="mb-14"
-        />
-
-        <div className="space-y-10">
-          {groupedTechnologies.map((group) => (
-            <div key={group.category}>
-              <div className="mb-4 flex items-center gap-3">
-                <span className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
-                  {group.category}
-                </span>
-                <span className="h-px flex-1 bg-border" aria-hidden />
+    <section id="skills" className="section-space border-t border-border">
+      <div className="site-container">
+        <SectionHeading kicker="03 / My toolkit" title="The right tools for the job." description="From a focused WordPress website to a complete web application." align="left" className="mb-10" />
+        <div className="divide-y divide-border border-y border-border">
+          {groups.map((group) => (
+            <FadeIn key={group.name} distance={12} className="grid gap-5 py-7 md:grid-cols-[240px_1fr] md:gap-12">
+              <div>
+                <h3 className="text-base font-semibold">{group.name}</h3>
+                <p className="mt-2 text-sm leading-6 text-muted-foreground">{group.description}</p>
               </div>
-
-              <StaggerGroup className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-                {group.items.map((tech) => (
-                  <StaggerItem key={tech.name}>
-                    <motion.div
-                      whileHover={{ y: -4, scale: 1.02 }}
-                      transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                      className="glow-border group flex items-center gap-3 rounded-xl border border-border/60 bg-secondary/30 px-4 py-3 transition-colors hover:border-primary/30"
-                    >
-                      <div className="relative h-8 w-8 shrink-0">
-                        <Image
-                          src={tech.logo}
-                          alt={tech.name}
-                          fill
-                          className={`object-contain ${tech.preserveColor ? "" : "dark:invert"}`}
-                        />
-                      </div>
-                      <span className="text-sm font-medium">{tech.name}</span>
-                    </motion.div>
-                  </StaggerItem>
+              <ul className="flex flex-wrap content-center gap-x-6 gap-y-5">
+                {technologies.filter((tech) => group.categories.includes(tech.category)).map((tech) => (
+                  <li key={tech.name} className="flex items-center gap-2.5">
+                    <span className="relative size-6 shrink-0">
+                      <Image
+                        src={tech.logo}
+                        alt=""
+                        fill
+                        sizes="24px"
+                        className={"object-contain " + (["Next.js", "GitHub"].includes(tech.name) ? "dark:invert" : "")}
+                      />
+                    </span>
+                    <span className="text-sm">{tech.name}</span>
+                  </li>
                 ))}
-              </StaggerGroup>
-            </div>
+              </ul>
+            </FadeIn>
           ))}
         </div>
       </div>

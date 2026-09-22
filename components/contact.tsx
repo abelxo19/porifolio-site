@@ -1,203 +1,101 @@
-"use client";
+"use client"
 
-import type React from "react";
-import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle } from "lucide-react";
-import { sendContactEmail } from "@/app/action/contact";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import FadeIn from "@/components/motion/fade-in";
-import SectionHeading from "@/components/decor/section-heading";
-
-const initialState = {
-  error: null as string | null,
-  success: null as string | null,
-};
+import type React from "react"
+import { useState } from "react"
+import { ArrowUpRight, Mail, Phone, MapPin, Send, LoaderCircle } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { sendContactEmail } from "@/app/action/contact"
+import FadeIn from "@/components/motion/fade-in"
+import SectionHeading from "@/components/decor/section-heading"
 
 const contactDetails = [
-  { icon: Mail, label: "Email", value: "abelaatkelet@gmail.com" },
-  { icon: Phone, label: "Phone", value: "+251993861744" },
-  { icon: MapPin, label: "Location", value: "Nairobi, Kenya" },
-];
-
-const formFields = [
-  { name: "name", label: "Name", type: "text", placeholder: "Your name" },
-  { name: "email", label: "Email", type: "email", placeholder: "you@example.com" },
-];
+  { icon: Mail, label: "Email", value: "abelaatkelet@gmail.com", href: "mailto:abelaatkelet@gmail.com" },
+  { icon: Phone, label: "Phone", value: "+251993861744", href: "tel:+251993861744" },
+  { icon: MapPin, label: "Based in", value: "Addis Ababa, Ethiopia", href: undefined },
+]
 
 export default function Contact() {
-  const [formState, setFormState] = useState(initialState);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formState, setFormState] = useState<{ error: string | null; success: string | null }>({ error: null, success: null })
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    const formData = new FormData(e.currentTarget);
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    if (isSubmitting) return
+    const form = event.currentTarget
+    const formData = new FormData(form)
+    setIsSubmitting(true)
+    setFormState({ error: null, success: null })
 
     try {
-      const response = await sendContactEmail(formData);
-      setFormState({
-        error: response.error || null,
-        success: response.success || null,
-      });
-
-      if (response.success) {
-        e.currentTarget.reset();
-      }
+      const response = await sendContactEmail(formData)
+      setFormState({ error: response.error || null, success: response.success || null })
+      if (response.success) form.reset()
     } catch {
-      setFormState({ error: null, success: null });
+      setFormState({ error: "Something went wrong. Please try again or email me directly.", success: null })
+    } finally {
+      setIsSubmitting(false)
     }
-
-    setIsSubmitting(false);
-  };
+  }
 
   return (
-    <section id="contact" className="relative py-20 md:py-28">
-      <div className="container px-4 md:px-6">
-        <SectionHeading
-          kicker="Get In Touch"
-          title="Let's Build Something"
-          description="Have a project in mind or want to collaborate? Feel free to reach out!"
-          className="mb-14"
-        />
-
-        <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
-          <FadeIn direction="left" className="space-y-6">
-            <Card className="glass-panel border-border/60">
-              <CardHeader>
-                <CardTitle>Contact Information</CardTitle>
-                <CardDescription>Feel free to reach out through any of these channels.</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {contactDetails.map((detail) => (
-                  <div key={detail.label} className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
-                      <detail.icon className="h-5 w-5 text-primary" />
-                    </div>
-                    <div>
-                      <p className="text-sm text-muted-foreground">{detail.label}</p>
-                      <p className="font-medium">{detail.value}</p>
-                    </div>
+    <section id="contact" className="section-space border-t border-border bg-secondary/25">
+      <div className="site-container grid gap-12 lg:grid-cols-2 lg:gap-20">
+        <div>
+          <SectionHeading kicker="04 / Get in touch" title="Have something in mind?" description="I'd love to hear about it. Available for freelance projects and collaborations." align="left" />
+          <FadeIn className="mt-8">
+            <dl className="space-y-6">
+              {contactDetails.map((detail) => (
+                <div key={detail.label} className="flex items-start gap-4">
+                  <detail.icon className="mt-1 size-4 shrink-0 text-muted-foreground" />
+                  <div className="min-w-0">
+                    <dt className="text-xs text-muted-foreground">{detail.label}</dt>
+                    <dd className="mt-1 text-sm font-medium">
+                      {detail.href ? (
+                        <a href={detail.href} className="inline-flex min-h-8 items-center gap-2 break-all hover:text-primary">
+                          {detail.value}<ArrowUpRight className="size-3.5 shrink-0" />
+                        </a>
+                      ) : detail.value}
+                    </dd>
                   </div>
-                ))}
-              </CardContent>
-            </Card>
-
-            <Card className="glow-border bg-primary text-primary-foreground">
-              <CardHeader>
-                <CardTitle>Let&apos;s work together</CardTitle>
-                <CardDescription className="text-primary-foreground/80">
-                  I&apos;m currently available for freelance work and collaborations.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-primary-foreground/90">
-                  Whether you need a website, web application, or consultation, I&apos;m here to help bring your ideas
-                  to life with modern technologies and best practices.
-                </p>
-              </CardContent>
-            </Card>
-          </FadeIn>
-
-          <FadeIn direction="right">
-            <Card className="glass-panel border-border/60">
-              <CardHeader>
-                <CardTitle>Send a Message</CardTitle>
-                <CardDescription>
-                  Fill out the form below and I&apos;ll get back to you as soon as possible.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <AnimatePresence mode="wait">
-                  {formState.success && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -8 }}
-                    >
-                      <Alert className="mb-4 bg-green-50 text-green-800 border-green-200 dark:bg-green-950/40 dark:text-green-300 dark:border-green-900">
-                        <CheckCircle className="h-4 w-4 text-green-600 dark:text-green-400" />
-                        <AlertTitle>Success!</AlertTitle>
-                        <AlertDescription>{formState.success}</AlertDescription>
-                      </Alert>
-                    </motion.div>
-                  )}
-
-                  {formState.error && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -8 }}
-                    >
-                      <Alert className="mb-4 bg-red-50 text-red-800 border-red-200 dark:bg-red-950/40 dark:text-red-300 dark:border-red-900">
-                        <AlertCircle className="h-4 w-4 text-red-600 dark:text-red-400" />
-                        <AlertTitle>Error</AlertTitle>
-                        <AlertDescription>{formState.error}</AlertDescription>
-                      </Alert>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-
-                <form className="space-y-4" onSubmit={handleSubmit}>
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    {formFields.map((field) => (
-                      <div className="space-y-2" key={field.name}>
-                        <label htmlFor={field.name} className="text-sm font-medium">
-                          {field.label}
-                        </label>
-                        <Input
-                          id={field.name}
-                          name={field.name}
-                          type={field.type}
-                          placeholder={field.placeholder}
-                          required
-                        />
-                      </div>
-                    ))}
-                  </div>
-                  <div className="space-y-2">
-                    <label htmlFor="subject" className="text-sm font-medium">
-                      Subject
-                    </label>
-                    <Input id="subject" name="subject" placeholder="What's this about?" required />
-                  </div>
-                  <div className="space-y-2">
-                    <label htmlFor="message" className="text-sm font-medium">
-                      Message
-                    </label>
-                    <Textarea
-                      id="message"
-                      name="message"
-                      placeholder="Tell me about your project"
-                      className="min-h-[120px]"
-                      required
-                    />
-                  </div>
-                  <Button type="submit" variant="glow" className="w-full" size="lg" disabled={isSubmitting}>
-                    {isSubmitting ? (
-                      <span className="flex items-center gap-2">
-                        <Send className="h-4 w-4" />
-                        Sending...
-                      </span>
-                    ) : (
-                      <>
-                        <Send className="h-4 w-4" />
-                        Send Message
-                      </>
-                    )}
-                  </Button>
-                </form>
-              </CardContent>
-            </Card>
+                </div>
+              ))}
+            </dl>
           </FadeIn>
         </div>
+
+        <FadeIn>
+          <form className="space-y-5" onSubmit={handleSubmit} aria-label="Send a message" aria-busy={isSubmitting}>
+            <div className="grid gap-5 sm:grid-cols-2">
+              <div className="space-y-2">
+                <label htmlFor="name" className="text-sm font-medium">Name</label>
+                <Input id="name" name="name" autoComplete="name" placeholder="Your name" className="h-11 bg-background" required />
+              </div>
+              <div className="space-y-2">
+                <label htmlFor="email" className="text-sm font-medium">Email</label>
+                <Input id="email" name="email" type="email" autoComplete="email" placeholder="you@example.com" className="h-11 bg-background" required />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <label htmlFor="subject" className="text-sm font-medium">Subject</label>
+              <Input id="subject" name="subject" placeholder="What's the project?" className="h-11 bg-background" required />
+            </div>
+            <div className="space-y-2">
+              <label htmlFor="message" className="text-sm font-medium">Message</label>
+              <Textarea id="message" name="message" placeholder="Tell me a little about what you have in mind..." className="min-h-36 resize-y bg-background" required />
+            </div>
+            <div aria-live="polite">
+              {formState.success && <p role="status" className="text-sm text-emerald-700 dark:text-emerald-400">{formState.success}</p>}
+              {formState.error && <p role="alert" className="text-sm text-red-600 dark:text-red-400">{formState.error}</p>}
+            </div>
+            <Button type="submit" size="lg" disabled={isSubmitting} className="w-full rounded-md bg-foreground text-background hover:bg-foreground/85 sm:w-auto">
+              {isSubmitting ? <LoaderCircle className="size-4 motion-safe:animate-spin" /> : <Send className="size-4" />}
+              {isSubmitting ? "Sending..." : "Send message"}
+            </Button>
+          </form>
+        </FadeIn>
       </div>
     </section>
-  );
+  )
 }

@@ -2,26 +2,19 @@
 
 import { useState } from "react"
 import Image from "next/image"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { ArrowUpRight, ExternalLink, Github, Globe } from "lucide-react"
+import { ArrowUpRight, ChevronDown, Github } from "lucide-react"
 import FadeIn from "@/components/motion/fade-in"
 import SectionHeading from "@/components/decor/section-heading"
 import { cn } from "@/lib/utils"
-import { getProjectActionKind, projects, type Project } from "@/lib/projects"
+import { projects, type Project } from "@/lib/projects"
 
-const getActionIcon = (label: string) => {
-  if (getProjectActionKind(label) === "visit") return Globe
-  return ExternalLink
-}
+const filters = ["All projects", "WordPress", "Web apps"] as const
+type ProjectFilter = (typeof filters)[number]
 
-function initialsOf(title: string) {
-  return title
-    .split(" ")
-    .filter((word) => /[a-zA-Z]/.test(word[0]))
-    .slice(0, 2)
-    .map((word) => word[0]?.toUpperCase())
-    .join("")
+function matchesFilter(project: Project, filter: ProjectFilter) {
+  if (filter === "All projects") return true
+  const isWordPress = project.tags.includes("WordPress")
+  return filter === "WordPress" ? isWordPress : !isWordPress
 }
 
 function ProjectImage({ project }: { project: Project }) {
@@ -29,10 +22,8 @@ function ProjectImage({ project }: { project: Project }) {
 
   if (errored) {
     return (
-      <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-primary/20 via-secondary/40 to-background">
-        <span className="font-display text-4xl font-semibold text-primary/70">
-          {initialsOf(project.title)}
-        </span>
+      <div className="flex h-full items-center justify-center bg-secondary text-sm text-muted-foreground">
+        {project.title}
       </div>
     )
   }
@@ -40,121 +31,145 @@ function ProjectImage({ project }: { project: Project }) {
   return (
     <Image
       src={project.image}
-      alt={project.title}
+      alt={project.title + " website preview"}
       fill
-      sizes="(min-width: 1024px) 45vw, 100vw"
-      className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
+      sizes="(min-width: 1200px) 550px, (min-width: 768px) calc((100vw - 72px) / 2), calc(100vw - 40px)"
+      className="object-contain"
       onError={() => setErrored(true)}
     />
   )
 }
 
-function CaseStudy({ project, index }: { project: Project; index: number }) {
-  const PrimaryIcon = getActionIcon(project.primaryLabel)
-  const reversed = index % 2 === 1
+function ProjectCard({ project, index }: { project: Project; index: number }) {
+  const isLive = /^https?:/.test(project.primaryLink)
+  const previewLink = isLive ? project.primaryLink : project.githubLink
+  const domain = previewLink ? new URL(previewLink).hostname.replace(/^www\./, "") : "Project preview"
 
   return (
-    <FadeIn amount={0.15} className="group">
-      <div
-        className={cn(
-          "grid gap-8 rounded-3xl border border-border/60 bg-secondary/20 p-4 md:gap-10 md:p-6 lg:grid-cols-2 lg:items-center lg:p-8",
-          reversed && "lg:[&>*:first-child]:order-2",
-        )}
-      >
-        <div className="glow-border relative aspect-[4/3] overflow-hidden rounded-2xl bg-secondary/40">
-          <ProjectImage project={project} />
-          <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent" />
-          <span className="glass-panel font-display absolute left-4 top-4 rounded-full px-3 py-1 text-sm font-semibold text-primary">
-            {String(index + 1).padStart(2, "0")}
-          </span>
-        </div>
-
-        <div className="space-y-5">
-          <div>
-            <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
-              Case Study
+    <FadeIn distance={16} amount={0.08} className="min-w-0">
+      <article className="project-card group overflow-hidden rounded-lg border border-border bg-card">
+        <a
+          href={previewLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={(isLive ? "Visit " : "View source for ") + project.title + " (opens in a new tab)"}
+          className="block border-b border-border focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-primary"
+        >
+          <div className="flex h-9 items-center gap-3 border-b border-border bg-secondary/50 px-4">
+            <span className="flex shrink-0 gap-1.5" aria-hidden="true">
+              <span className="size-1.5 rounded-full bg-muted-foreground/30" />
+              <span className="size-1.5 rounded-full bg-muted-foreground/30" />
+              <span className="size-1.5 rounded-full bg-muted-foreground/30" />
             </span>
-            <h3 className="font-display mt-2 text-2xl font-semibold tracking-tight md:text-3xl">
+            <span className="min-w-0 flex-1 truncate text-center text-[11px] text-muted-foreground">{domain}</span>
+            <ArrowUpRight className="size-3.5 shrink-0 text-muted-foreground" />
+          </div>
+          <div className="relative aspect-video w-full bg-secondary/50">
+            <ProjectImage project={project} />
+          </div>
+        </a>
+
+        <div className="p-5">
+          <div className="mb-3 flex items-center justify-between gap-3 text-xs text-muted-foreground">
+            <span>{project.tags.includes("WordPress") ? "WordPress & Elementor" : "Web application"}</span>
+            <span className="font-mono text-[11px]" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+          </div>
+          <h3 className="font-display text-xl font-semibold leading-snug">
+            <a href={previewLink} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-primary">
               {project.title}
-            </h3>
-          </div>
+            </a>
+          </h3>
+          <p className="mt-3 text-sm leading-6 text-muted-foreground md:min-h-12">{project.description}</p>
 
-          <p className="text-sm text-muted-foreground md:text-base">{project.description}</p>
-
-          {(project.problem || project.solution || project.impact) && (
-            <dl className="grid gap-3 sm:grid-cols-3">
-              {project.problem && (
-                <div className="rounded-xl border border-border/50 bg-background/40 p-3">
-                  <dt className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
-                    Problem
-                  </dt>
-                  <dd className="mt-1 text-xs leading-relaxed">{project.problem}</dd>
-                </div>
-              )}
-              {project.solution && (
-                <div className="rounded-xl border border-border/50 bg-background/40 p-3">
-                  <dt className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
-                    Solution
-                  </dt>
-                  <dd className="mt-1 text-xs leading-relaxed">{project.solution}</dd>
-                </div>
-              )}
-              {project.impact && (
-                <div className="rounded-xl border border-border/50 bg-background/40 p-3">
-                  <dt className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
-                    Impact
-                  </dt>
-                  <dd className="mt-1 text-xs leading-relaxed">{project.impact}</dd>
-                </div>
-              )}
-            </dl>
-          )}
-
-          <div className="flex flex-wrap gap-2">
+          <ul className="mt-4 flex min-h-12 flex-wrap content-start gap-1.5" aria-label="Technologies used">
             {project.tags.map((tag) => (
-              <Badge key={tag} variant="secondary" className="border-border/60">
+              <li key={tag} className="rounded bg-secondary px-2 py-1 text-[11px] font-medium leading-4 text-secondary-foreground">
                 {tag}
-              </Badge>
+              </li>
             ))}
-          </div>
+          </ul>
 
-          <div className="flex flex-wrap gap-3 pt-1">
-            <Button size="sm" variant="glow" asChild>
-              <a href={project.primaryLink} target="_blank" rel="noopener noreferrer">
-                <PrimaryIcon className="h-4 w-4" />
-                {project.primaryLabel}
-                <ArrowUpRight className="h-3.5 w-3.5" />
+          <div className="mt-4 flex min-h-10 items-center justify-between gap-3 border-t border-border pt-4">
+            {isLive ? (
+              <a href={project.primaryLink} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-10 items-center gap-2 text-sm font-medium hover:text-primary">
+                {project.primaryLabel === "Demo" ? "Live demo" : project.primaryLabel}
+                <ArrowUpRight className="size-4 transition-transform motion-safe:group-hover:-translate-y-0.5 motion-safe:group-hover:translate-x-0.5" />
               </a>
-            </Button>
+            ) : (
+              <span className="text-xs text-muted-foreground">Source available</span>
+            )}
             {project.githubLink && (
-              <Button variant="outline-glow" size="sm" asChild>
-                <a href={project.githubLink} target="_blank" rel="noopener noreferrer">
-                  <Github className="h-4 w-4" />
-                  Code
-                </a>
-              </Button>
+              <a href={project.githubLink} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-10 items-center gap-2 text-sm text-muted-foreground hover:text-foreground" aria-label={"View source code for " + project.title}>
+                <Github className="size-4" />
+                Code
+              </a>
             )}
           </div>
+
+          {(project.problem || project.solution || project.impact) && (
+            <details className="project-details mt-2 border-t border-border">
+              <summary className="flex min-h-10 cursor-pointer list-none items-center justify-between gap-2 text-xs font-medium text-muted-foreground hover:text-foreground">
+                Project details
+                <ChevronDown className="size-4 transition-transform" />
+              </summary>
+              <dl className="space-y-4 pb-2 pt-3 text-sm leading-6">
+                {[
+                  ["The brief", project.problem],
+                  ["The approach", project.solution],
+                  ["The result", project.impact],
+                ].map(([label, value]) => value && (
+                  <div key={label}>
+                    <dt className="font-medium">{label}</dt>
+                    <dd className="mt-1 text-muted-foreground">{value}</dd>
+                  </div>
+                ))}
+              </dl>
+            </details>
+          )}
         </div>
-      </div>
+      </article>
     </FadeIn>
   )
 }
 
 export default function Projects() {
-  return (
-    <section id="projects" className="relative py-20 md:py-28">
-      <div className="container px-4 md:px-6">
-        <SectionHeading
-          kicker="Selected Work"
-          title="My Projects"
-          description="A closer look at what I built, why it mattered, and the stack behind it."
-          className="mb-14"
-        />
+  const [filter, setFilter] = useState<ProjectFilter>("All projects")
+  const visibleProjects = projects.filter((project) => matchesFilter(project, filter))
 
-        <div className="space-y-10">
-          {projects.map((project, index) => (
-            <CaseStudy key={project.title} project={project} index={index} />
+  return (
+    <section id="projects" className="section-space border-t border-border">
+      <div className="site-container">
+        <div className="mb-8 flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
+          <SectionHeading
+            kicker="01 / Selected work"
+            title="Ideas, made real."
+            description="A selection of client websites and applications I've built."
+            align="left"
+          />
+          <div role="group" aria-label="Filter projects" className="flex w-fit max-w-full rounded-lg border border-border bg-secondary/50 p-1">
+            {filters.map((option) => (
+              <button
+                key={option}
+                type="button"
+                aria-pressed={filter === option}
+                aria-controls="project-grid"
+                onClick={() => setFilter(option)}
+                className={cn(
+                  "inline-flex min-h-10 items-center justify-center gap-2 rounded-md px-3 text-xs font-medium transition-colors sm:text-sm",
+                  filter === option ? "bg-background text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground",
+                )}
+              >
+                {option}
+                <span className="hidden text-[11px] text-muted-foreground sm:inline">{projects.filter((project) => matchesFilter(project, option)).length}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <p role="status" className="sr-only">Showing {visibleProjects.length} {filter.toLowerCase()}</p>
+        <div id="project-grid" className="grid items-start gap-6 md:grid-cols-2">
+          {visibleProjects.map((project) => (
+            <ProjectCard key={project.title} project={project} index={projects.indexOf(project)} />
           ))}
         </div>
       </div>
