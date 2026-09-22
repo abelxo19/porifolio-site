@@ -24,7 +24,7 @@ export default function Skills() {
               </div>
               <ul className="flex flex-wrap content-center gap-x-6 gap-y-5">
                 {technologies.filter((tech) => group.categories.includes(tech.category)).map((tech) => (
-                  <li key={tech.name} className="flex items-center gap-2.5">
+                  <li key={tech.name} className="skill-item flex items-center gap-2.5">
                     <span className="relative size-6 shrink-0">
                       <Image
                         src={tech.logo}

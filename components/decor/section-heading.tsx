@@ -24,7 +24,7 @@ export default function SectionHeading({
         className,
       )}
     >
-      <span className="text-xs font-medium text-muted-foreground">
+      <span className="section-kicker inline-flex items-center gap-2.5 font-mono text-xs text-muted-foreground">
         {kicker}
       </span>
       <h2 className="font-display text-3xl font-semibold leading-tight sm:text-4xl">

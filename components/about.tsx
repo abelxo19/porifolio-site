@@ -9,7 +9,8 @@ export default function About() {
     <section id="about" className="section-space border-t border-border bg-secondary/25">
       <div className="site-container grid items-center gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
         <FadeIn direction="right" distance={16}>
-          <figure>
+          <figure className="portrait-figure max-w-[480px]">
+            <div className="portrait-frame relative">
             <Image
               src={portrait}
               alt="Abel Atkelet"
@@ -17,6 +18,7 @@ export default function About() {
               className="h-auto w-full max-w-[480px] rounded-lg"
               placeholder="blur"
             />
+            </div>
             <figcaption className="mt-4 flex max-w-[480px] items-center justify-between gap-3 text-xs text-muted-foreground">
               <span>Abel Atkelet</span>
               <span>Developer & designer</span>
