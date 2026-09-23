@@ -77,7 +77,7 @@ export const projects: Project[] = [
   {
     title: "Landing Page",
     description: "A modern landing page website showcasing projects and skills with a clean, minimalist and responsive design.",
-    image: "/landing.png",
+    image: "/makeit.png",
     tags: ["Next.js", "Tailwind CSS", "Framer Motion"],
     primaryLink: "https://modern-landing-page-theta.vercel.app/",
     primaryLabel: "Demo",
