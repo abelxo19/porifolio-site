@@ -33,7 +33,7 @@ export default function About() {
               <p>I&apos;m a full-stack developer with over 3 years of experience turning ideas into responsive, accessible web experiences.</p>
             </FadeIn>
             <FadeIn delay={0.1}>
-              <p>My work spans custom React and Next.js applications, as well as WordPress and Elementor websites. From the first layout to payments and deployment, I care about the details that make a website useful and easy to maintain.</p>
+              <p>I build with React, Next.js, Python frameworks, WordPress, and Elementor, and customize business solutions with Frappe ERP. From layout to payments and deployment, I focus on useful, maintainable websites and applications.</p>
             </FadeIn>
             <FadeIn delay={0.15}>
               <p>I started building while at university and haven&apos;t stopped exploring since. Away from the screen, you&apos;ll usually find me playing football, reading, or trying something new.</p>
