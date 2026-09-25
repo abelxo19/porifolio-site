@@ -281,6 +281,68 @@
   }
 }
 
+/* Low-contrast decoration sits beneath every section and never catches input. */
+.ambient-background {
+  --ambient-opacity: 0.07;
+  --sparkle-color: #6366f1;
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+}
+
+.dark .ambient-background {
+  --ambient-opacity: 0.1;
+  --sparkle-color: #b6b4ff;
+}
+
+.ambient-gradient {
+  position: absolute;
+  inset: -8%;
+  opacity: var(--ambient-opacity);
+  background:
+    radial-gradient(ellipse at 90% 15%, #6366f1, transparent 52%),
+    radial-gradient(ellipse at 5% 75%, #8b5cf6, transparent 48%),
+    radial-gradient(ellipse at 85% 95%, #38bdf8, transparent 45%);
+}
+
+.ambient-sparkle {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--sparkle-color);
+  box-shadow: 0 0 6px 1px color-mix(in srgb, var(--sparkle-color) 20%, transparent);
+  opacity: 0.14;
+}
+
+@keyframes ambient-drift {
+  from { transform: translate3d(-1%, -1%, 0) scale(1); }
+  to { transform: translate3d(2%, 1%, 0) scale(1.04); }
+}
+
+@keyframes ambient-twinkle {
+  0%, 100% { opacity: 0.06; transform: scale(0.75); }
+  45% { opacity: 0.3; transform: scale(1.15); }
+  70% { opacity: 0.12; transform: scale(0.9); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ambient-gradient {
+    animation: ambient-drift 28s ease-in-out infinite alternate;
+  }
+
+  .ambient-sparkle {
+    animation: ambient-twinkle var(--sparkle-duration) ease-in-out var(--sparkle-delay) infinite;
+  }
+}
+
+@media (max-width: 640px) {
+  .ambient-sparkle:nth-child(even) {
+    display: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
