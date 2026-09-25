@@ -18,7 +18,7 @@ export default function ThemeToggle() {
       onClick={() => setTheme(isDark ? "light" : "dark")}
       role="switch"
       aria-checked={isDark}
-      aria-label="Dark mode"
+      aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
       title={`Switch to ${isDark ? "light" : "dark"} mode`}
       className="inline-flex size-11 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
     >
