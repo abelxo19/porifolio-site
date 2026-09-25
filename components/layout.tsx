@@ -10,6 +10,7 @@ const NAV_SECTIONS = [
   { id: "home", label: "Home" },
   { id: "projects", label: "Projects" },
   { id: "about", label: "About" },
+  { id: "experience", label: "Experience" },
   { id: "skills", label: "Skills" },
   { id: "contact", label: "Contact" },
 ]
@@ -62,7 +63,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <span className="flex size-9 items-center justify-center rounded-md bg-foreground text-xs text-background">AA<span className="text-primary">.</span></span>
             <span className="sm:text-base">Abel Atkelet</span>
           </a>
-          <nav className="hidden items-center gap-7 md:flex" aria-label="Primary">
+          <nav className="hidden items-center gap-4 md:flex lg:gap-7" aria-label="Primary">
             {NAV_SECTIONS.map((section) => (
               <a
                 key={section.id}

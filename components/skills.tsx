@@ -14,7 +14,7 @@ export default function Skills() {
   return (
     <section id="skills" className="section-space border-t border-border">
       <div className="site-container">
-        <SectionHeading kicker="03 / My toolkit" title="The right tools for the job." description="From a focused WordPress website to a complete web application." align="left" className="mb-10" />
+        <SectionHeading kicker="04 / My toolkit" title="The right tools for the job." description="From a focused WordPress website to a complete web application." align="left" className="mb-10" />
         <div className="divide-y divide-border border-y border-border">
           {groups.map((group) => (
             <FadeIn key={group.name} distance={12} className="grid gap-5 py-7 md:grid-cols-[240px_1fr] md:gap-12">
