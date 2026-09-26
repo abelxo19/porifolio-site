@@ -11,6 +11,7 @@ const NAV_SECTIONS = [
   { id: "projects", label: "Projects" },
   { id: "about", label: "About" },
   { id: "experience", label: "Experience" },
+  { id: "education", label: "Education" },
   { id: "skills", label: "Skills" },
   { id: "contact", label: "Contact" },
 ]
@@ -45,7 +46,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   }, [isMenuOpen])
 
   useEffect(() => {
-    const desktop = window.matchMedia("(min-width: 768px)")
+    const desktop = window.matchMedia("(min-width: 1024px)")
     const closeOnDesktop = () => { if (desktop.matches) setIsMenuOpen(false) }
     desktop.addEventListener("change", closeOnDesktop)
     return () => desktop.removeEventListener("change", closeOnDesktop)
@@ -63,7 +64,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <span className="flex size-9 items-center justify-center rounded-md bg-foreground text-xs text-background">AA<span className="text-primary">.</span></span>
             <span className="sm:text-base">Abel Atkelet</span>
           </a>
-          <nav className="hidden items-center gap-4 md:flex lg:gap-7" aria-label="Primary">
+          <nav className="hidden items-center gap-7 lg:flex" aria-label="Primary">
             {NAV_SECTIONS.map((section) => (
               <a
                 key={section.id}
@@ -77,7 +78,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </nav>
           <div className="flex items-center gap-2">
             <ThemeToggle />
-            <button type="button" className="inline-flex size-11 items-center justify-center rounded-md hover:bg-secondary md:hidden" onClick={() => setIsMenuOpen(true)} aria-label="Open menu" aria-expanded={isMenuOpen} aria-controls="mobile-navigation">
+            <button type="button" className="inline-flex size-11 items-center justify-center rounded-md hover:bg-secondary lg:hidden" onClick={() => setIsMenuOpen(true)} aria-label="Open menu" aria-expanded={isMenuOpen} aria-controls="mobile-navigation">
               <Menu className="size-5" />
             </button>
           </div>

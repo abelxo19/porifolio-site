@@ -43,7 +43,7 @@ export default function Contact() {
     <section id="contact" className="section-space border-t border-border bg-secondary/25">
       <div className="site-container grid gap-12 lg:grid-cols-2 lg:gap-20">
         <div>
-          <SectionHeading kicker="05 / Get in touch" title="Have something in mind?" description="I'd love to hear about it. Available for freelance projects and collaborations." align="left" />
+          <SectionHeading kicker="06 / Get in touch" title="Have something in mind?" description="I'd love to hear about it. Available for freelance projects and collaborations." align="left" />
           <FadeIn className="mt-8">
             <dl className="space-y-6">
               {contactDetails.map((detail) => (
